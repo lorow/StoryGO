@@ -13,7 +13,7 @@ function Navbar(props) {
           ({ path, name }, index) => (
             <StyledLink
               key={path + index}
-              isActive={props.location.pathname === path}
+              isLinkActive={props.location.pathname === path}
               to={path}
             >
               {name}
@@ -48,7 +48,7 @@ const StyledLink = styled(Link)`
   color: #FFFFFF;
   text-decoration: none;
   
-  opacity: ${props => props.isActive ? 1 : .5};
+  opacity: ${props => props.isLinkActive ? 1 : .5};
 
   margin-left: auto;
   margin-right: 40px;
