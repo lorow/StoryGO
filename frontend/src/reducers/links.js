@@ -14,7 +14,6 @@ export const links = (state = [], action) => {
         ))
       ]
 
-
     default: return state
   }
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import routes from '../../routes.js';
-import { Link, withRouter } from 'react-router-dom';
+import { StyledLink } from '../styledLink';
+import { withRouter } from 'react-router-dom';
 
 
 function Navbar(props) {
@@ -41,17 +42,5 @@ const Title = styled.h1`
   color: #FFFFFF;
 `;
 
-const StyledLink = styled(Link)`
-  font-size: 20px;
-  line-height: 60px;
-
-  color: #FFFFFF;
-  text-decoration: none;
-  
-  opacity: ${props => props.isLinkActive ? 1 : .5};
-
-  margin-left: auto;
-  margin-right: 40px;
-`;
 
 export default withRouter(Navbar);

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
 color:white;
+display: block;
 width: ${props => props.isBigger ? 348 : 281}px;
 height: ${props => props.isBigger ? 83 : 67}px;
 background-color: ${ props => props.isCurrentlyActive ? '#0085FF' : 'transparent'};
