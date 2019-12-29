@@ -6,7 +6,10 @@ import Navbar from './components/navbar';
 
 
 const Main = styled.main`
-  height: 100%;
+  height: auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: #0A0A0A;
 `;
 

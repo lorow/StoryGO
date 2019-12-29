@@ -13,3 +13,15 @@ export const StyledLink = styled(Link)`
   margin-left: auto;
   margin-right: 40px;
 `;
+
+export const StyledRegularLink = styled.a`
+  font-size: 20px;
+  line-height: 60px;
+
+  color: #FFFFFF;
+  text-decoration: none;
+  margin: 0;
+  width: '100%';
+  height: '100%';
+  display: 'block'; 
+`;

@@ -1,20 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { StyledLink } from '../../components/styledLink';
+import { TwoColumnLayout } from '../../components/layouts';
 import ActionButton from '../../components/actionButton';
 import MainHeader from '../../components/mainHeader';
 
-
-const TwoColumnLayout = styled.section`
-  display: grid;
-  justify-items: center;
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-`;
 
 const SubTitle = styled.h2`
   font-size: 1.5rem;
