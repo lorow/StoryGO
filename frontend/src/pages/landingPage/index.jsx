@@ -18,7 +18,7 @@ const TwoColumnLayout = styled.section`
 
 const SubTitle = styled.h2`
   font-size: 1.5rem;
-  line-height: 35px
+  line-height: 35px;
   max-width: 550px;
   color: #8E8E8E;
   margin-top: 20px;
@@ -39,9 +39,9 @@ function LandingPage(props) {
           Always with you, wherever you are
           in a form of an ebook
         </SubTitle>
-        <ActionButton isCurrentlyActive={true}>
+        <ActionButton>
           <StyledLink
-            style={{ margin: 0 }}
+            style={{ margin: 0, width: '100%', height: '100%', display: 'block' }}
             isLinkActive={true}
             to="/generate"
           >

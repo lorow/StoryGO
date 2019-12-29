@@ -2,21 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-color:white;
-display: block;
-width: ${props => props.isBigger ? 348 : 281}px;
-height: ${props => props.isBigger ? 83 : 67}px;
-background-color: ${ props => props.isCurrentlyActive ? '#0085FF' : 'transparent'};
-border: 3px solid ${props => props.isCurrentlyActive ? '#303030' : '#0085FF'};
-border-radius: 8px;
-box-shadow: 0px 4px 4px #000000;
+  color:white;
+  display: block;
+  width: ${props => props.isBigger ? 348 : 281}px;
+  height: ${props => props.isBigger ? 83 : 67}px;
+  background-color: transparent;
+  border: 3px solid #0085FF;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px #000000;
+
+  transition: .1s all ease-out;
+
+  &:active{
+    border-color: #303030;
+    background-color: #0085FF;
+  }
 `;
 
 export default function ActionButton(props) {
   return (
     <Button
       isBigger={props.isBigger}
-      isCurrentlyActive={props.isCurrentlyActive}
       onClick={props.onClick}
     >
       {props.children}
