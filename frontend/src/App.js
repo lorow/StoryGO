@@ -14,7 +14,6 @@ const Main = styled.main`
 `;
 
 function App() {
-
   return (
     <Main>
       <Router>
