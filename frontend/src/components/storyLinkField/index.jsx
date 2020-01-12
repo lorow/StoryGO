@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 
@@ -48,17 +48,16 @@ const DecorativeSpan = styled.span`
 
 export default function StoryLinkField(props) {
 
-  const [isBeingEdited, setIsBeingEdited] = useState(false);
   return (
-    <StoryBarInputLabel shouldBeDashed={!isBeingEdited}>
+    <StoryBarInputLabel shouldBeDashed={!props.isLinkBeingEdited}>
       <StoryBarInput
         placeholder="Add another link"
-        shouldBeLighter={!isBeingEdited}
+        shouldBeLighter={!props.isLinkBeingEdited}
         onChange={(env) => console.log("changed")}
-        onFocus={(env) => setIsBeingEdited(true)}
-        onBlur={(env) => setIsBeingEdited(false)}
+        onFocus={(env) => props.setIsLinkBeingEdited(true)}
+        onBlur={(env) => props.setIsLinkBeingEdited(false)}
       />
-      <DecorativeSpan shouldDisappear={!isBeingEdited}>+</DecorativeSpan>
+      <DecorativeSpan shouldDisappear={!props.isLinkBeingEdited}>+</DecorativeSpan>
     </StoryBarInputLabel>
   )
 }

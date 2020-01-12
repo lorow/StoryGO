@@ -14,10 +14,15 @@ export default function StoryLinkContainer(pros) {
 
   const [nextLinkId, setNextLinkId] = useState(0);
 
+  const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
+
   return (
     <StoryFieldContainer>
-      <StoryLinkField></StoryLinkField>
-      <StoryLinkEditingBar></StoryLinkEditingBar>
+      <StoryLinkField
+        isLinkBeingEdited={isLinkBeingEdited}
+        setIsLinkBeingEdited={setIsLinkBeingEdited}
+      />
+      <StoryLinkEditingBar shouldBeOpen={isLinkBeingEdited}></StoryLinkEditingBar>
     </StoryFieldContainer>
   )
 }
