@@ -1,5 +1,3 @@
-let nextLinkID = 0
-
 export const Addlink = (payload) => ({
   type: 'ADDED_LINK_TO_LIST',
   id: nextLinkID++,

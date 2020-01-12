@@ -11,6 +11,9 @@ const StoryFieldContainer = styled.li`
 `;
 
 export default function StoryLinkContainer(pros) {
+
+  const [nextLinkId, setNextLinkId] = useState(0);
+
   return (
     <StoryFieldContainer>
       <StoryLinkField></StoryLinkField>
