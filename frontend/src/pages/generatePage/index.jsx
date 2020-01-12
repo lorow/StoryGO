@@ -1,15 +1,16 @@
 import React from 'react';
-import StoryLinkContainer from '../../containers/storyLinkContainer'
-
+import { Route, Switch } from 'react-router-dom';
+import subRoutes from './subRoutes';
 
 function GeneratePage(props) {
   return (
-    // here will be displayed the currently active page, not the editing stuff
-    // the editing stuff will be put into a separate page
-    <ul>
-      <StoryLinkContainer></StoryLinkContainer>
-      <StoryLinkContainer></StoryLinkContainer>
-    </ul>
+    <Switch>
+      {
+        subRoutes.map(
+          ({ path, Component }) => (<Route key={path} path={path} component={Component} />)
+        )
+      }
+    </Switch>
   )
 }
 

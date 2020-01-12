@@ -11,7 +11,7 @@ function Navbar(props) {
       <Title>Soliter</Title>
       {
         routes.map(
-          ({ path, name }, index) => (
+          ({ path, name }, index) => path !== "/generate/:stageName" ? (
             <StyledLink
               key={path + index}
               isLinkActive={props.location.pathname === path}
@@ -19,7 +19,15 @@ function Navbar(props) {
             >
               {name}
             </StyledLink>
-          )
+          ) : (
+              <StyledLink
+                key={path + index}
+                isLinkActive={props.location.pathname === path}
+                to={"/generate/edit"}
+              >
+                {name}
+              </StyledLink>
+            )
         )
       }
     </Nav>
