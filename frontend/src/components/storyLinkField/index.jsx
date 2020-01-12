@@ -15,17 +15,19 @@ const StoryBarInputLabel = styled.label`
   display: flex;
   flex-direction: row;
   &:before {
-      content: "";
-      position: absolute;
-      border: 10px ${props => props.shouldBeDashed ? 'dashed #535353' : 'solid white'};
-      top: -7px;
-      bottom: -7px;
-      left: -7px;
-      right: -7px;
+    transition: all 0.2s;
+    content: "";
+    position: absolute;
+    border: 10px ${props => props.shouldBeDashed ? 'dashed #535353' : 'solid white'};
+    top: -7px;
+    bottom: -7px;
+    left: -7px;
+    right: -7px;
   }
 `;
 
 const StoryBarInput = styled.input`
+  transition: all 0.2s;
   flex-grow: 1;
 	height: 100%;
   border: none;
@@ -36,35 +38,27 @@ const StoryBarInput = styled.input`
 `;
 
 const DecorativeSpan = styled.span`
+  transition: all 0.2s;
   margin-right: 40px;
   font-size: 40px;
   height: 100%;
   line-height: 50px;
+  opacity: ${props => props.shouldDisappear ? '100' : '0'}%;
 `;
 
 export default function StoryLinkField(props) {
 
   const [isBeingEdited, setIsBeingEdited] = useState(false);
-
-  if (isBeingEdited) {
-    return (
-      <StoryBarInputLabel shouldBeDashed={!isBeingEdited}>
-        <StoryBarInput placeholder="Add another link"
-          onChange={(env) => console.log("changed")}
-          onFocus={(env) => setIsBeingEdited(true)}
-          onBlur={(env) => setIsBeingEdited(false)}
-        />
-      </StoryBarInputLabel>
-    )
-  }
-  else {
-    return (<StoryBarInputLabel shouldBeDashed={!isBeingEdited}>
-      <StoryBarInput placeholder="Add another link"
+  return (
+    <StoryBarInputLabel shouldBeDashed={!isBeingEdited}>
+      <StoryBarInput
+        placeholder="Add another link"
+        shouldBeLighter={!isBeingEdited}
         onChange={(env) => console.log("changed")}
         onFocus={(env) => setIsBeingEdited(true)}
         onBlur={(env) => setIsBeingEdited(false)}
       />
-      <DecorativeSpan>+</DecorativeSpan>
-    </StoryBarInputLabel>)
-  }
+      <DecorativeSpan shouldDisappear={!isBeingEdited}>+</DecorativeSpan>
+    </StoryBarInputLabel>
+  )
 }
