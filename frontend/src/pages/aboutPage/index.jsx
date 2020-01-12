@@ -54,7 +54,7 @@ function AboutPage(props) {
       <ActionButton isBigger={true}>
         <StyledRegularLink href="https://github.com/lorow/Soliter">
           Click here for source
-            </StyledRegularLink>
+        </StyledRegularLink>
       </ActionButton>
 
       <Footer>

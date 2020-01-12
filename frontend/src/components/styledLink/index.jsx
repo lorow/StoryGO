@@ -21,7 +21,7 @@ export const StyledRegularLink = styled.a`
   color: #FFFFFF;
   text-decoration: none;
   margin: 0;
-  width: '100%';
-  height: '100%';
-  display: 'block'; 
+  width: 100%;
+  height: 100%;
+  display: block; 
 `;
