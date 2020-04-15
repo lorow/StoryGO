@@ -60,7 +60,7 @@ export default function StoryLinkField(props) {
         onFocus={(env) => props.setIsLinkBeingEdited(true)}
         onBlur={(env) => props.setIsLinkBeingEdited(false)}
       />
-      <DecorativeSpan shouldDisappear={!props.isLinkBeingEdited || props.isInitial}>+</DecorativeSpan>
+      <DecorativeSpan shouldDisappear={props.isInitial ? false : !props.isLinkBeingEdited}>+</DecorativeSpan>
     </StoryBarInputLabel>
   )
 }

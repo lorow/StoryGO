@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const Button = styled.button`
   color:white;
   display: block;
-  width: ${props => props.isBigger ? 348 : 281}px;
-  height: ${props => props.isBigger ? 83 : 67}px;
-  line-height: ${props => props.isBigger ? '83px' : '67px'};
+  width: ${props => props.isBigger ? 320 : 280}px;
+  height: ${props => props.isBigger ? 80 : 60}px;
+  line-height: ${props => props.isBigger ? '83px' : '60px'};
   background-color: transparent;
   border: 3px solid #0085FF;
   border-radius: 8px;

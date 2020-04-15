@@ -5,6 +5,13 @@ import { TwoColumnLayout } from '../../components/layouts';
 import ActionButton from '../../components/actionButton';
 import MainHeader from '../../components/mainHeader';
 
+const CallToActionLink = styled(StyledLink)`
+  margin: 0; 
+  width:100%;
+  height: 100%;
+  line-height: 55px;
+  display: block;
+`;
 
 const SubTitle = styled.h2`
   font-size: 1.5rem;
@@ -30,13 +37,12 @@ function LandingPage(props) {
           in a form of an ebook
         </SubTitle>
         <ActionButton>
-          <StyledLink
-            style={{ margin: 0, width: '100%', height: '100%', display: 'block' }}
+          <CallToActionLink
             isLinkActive={true}
             to="/generate/edit"
           >
             Start creating!
-          </StyledLink>
+          </CallToActionLink>
         </ActionButton>
       </FirstColumnContainer>
       <img src="/Phone.svg" alt="An representation of a finished book" srcset="" />
