@@ -1,16 +1,16 @@
 export const Addlink = (payload) => ({
-  type: 'ADDED_LINK_TO_LIST',
+  type: 'ADDE_LINK_TO_LIST',
   id: nextLinkID++,
   payload: payload
 })
 
 export const RemoveLink = (id) => ({
-  type: 'REMOVED_LINK_FROM_LIST',
+  type: 'REMOVE_LINK_FROM_LIST',
   id
 })
 
 export const UpdateLink = (id, payload) => ({
-  type: 'UPDATED_LINK',
+  type: 'UPDATE_LINK',
   payload: payload,
   id
 })

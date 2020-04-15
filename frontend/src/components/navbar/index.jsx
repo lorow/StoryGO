@@ -6,9 +6,10 @@ import { withRouter } from 'react-router-dom';
 
 
 function Navbar(props) {
+
   return (
     <Nav>
-      <Title>Soliter</Title>
+      <Title to="/">Soliter</Title>
       {
         routes.map(
           ({ path, name }, index) => path !== "/generate/:stageName" ? (
@@ -22,8 +23,8 @@ function Navbar(props) {
           ) : (
               <StyledLink
                 key={path + index}
-                isLinkActive={props.location.pathname === path}
-                to={"/generate/edit"}
+                isLinkActive={props.location.pathname.includes("/generate")}
+                to={path}
               >
                 {name}
               </StyledLink>
@@ -43,11 +44,15 @@ const Nav = styled.nav`
   grid-template-columns: 1fr 5fr repeat(3, .1fr);
 `;
 
-const Title = styled.h1`
+const Title = styled(StyledLink)`
   font-size: 40px;
   line-height: 60px;
   margin-left: 40px;
   color: #FFFFFF;
+  opacity: 1;
+  cursor: pointer;
+
+  text-decoration: none;
 `;
 
 

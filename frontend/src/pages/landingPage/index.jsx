@@ -33,7 +33,7 @@ function LandingPage(props) {
           <StyledLink
             style={{ margin: 0, width: '100%', height: '100%', display: 'block' }}
             isLinkActive={true}
-            to="/generate"
+            to="/generate/edit"
           >
             Start creating!
           </StyledLink>
