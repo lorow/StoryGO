@@ -51,17 +51,16 @@ const DecorativeSpan = styled.span`
 `;
 
 export default function StoryLinkField(props) {
-
   return (
-    <StoryBarInputLabel shouldBeDashed={!props.isLinkBeingEdited}>
+    <StoryBarInputLabel shouldBeDashed={props.isInitial ? false : !props.isLinkBeingEdited}>
       <StoryBarInput
-        placeholder="Add another link"
-        shouldBeLighter={!props.isLinkBeingEdited}
+        placeholder={props.isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
+        shouldBeLighter={props.isInitial ? false : !props.isLinkBeingEdited}
         onChange={(env) => console.log("changed")}
         onFocus={(env) => props.setIsLinkBeingEdited(true)}
         onBlur={(env) => props.setIsLinkBeingEdited(false)}
       />
-      <DecorativeSpan shouldDisappear={!props.isLinkBeingEdited}>+</DecorativeSpan>
+      <DecorativeSpan shouldDisappear={!props.isLinkBeingEdited || props.isInitial}>+</DecorativeSpan>
     </StoryBarInputLabel>
   )
 }

@@ -14,8 +14,8 @@ export function LinkEditingSubPage(props) {
   return (
     <OneColumnLayout>
       <LinkList>
-        <StoryLinkContainer></StoryLinkContainer>
-        <StoryLinkContainer></StoryLinkContainer>
+        <StoryLinkContainer isInitial />
+        <StoryLinkContainer />
       </LinkList>
     </OneColumnLayout>
   )

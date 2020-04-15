@@ -11,11 +11,12 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-export default function StoryLinkContainer(pros) {
+export default function StoryLinkContainer(props) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
   return (
     <StoryFieldContainer>
       <StoryLinkField
+        isInitial={props.isInitial}
         isLinkBeingEdited={isLinkBeingEdited}
         setIsLinkBeingEdited={setIsLinkBeingEdited}
       />
