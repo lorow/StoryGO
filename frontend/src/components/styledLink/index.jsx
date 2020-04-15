@@ -16,7 +16,7 @@ export const StyledLink = styled(Link)`
 
 export const StyledRegularLink = styled.a`
   font-size: 20px;
-  line-height: 60px;
+  line-height: ${props => props.isBigger ? '77px' : '60px'};
 
   color: #FFFFFF;
   text-decoration: none;

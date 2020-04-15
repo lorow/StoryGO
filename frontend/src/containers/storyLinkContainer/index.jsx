@@ -5,17 +5,14 @@ import styled from 'styled-components';
 
 
 const StoryFieldContainer = styled.li`
+  width: 50vw;
   &:not(:first-of-type){
     margin-top: 30px;
   }
 `;
 
 export default function StoryLinkContainer(pros) {
-
-  const [nextLinkId, setNextLinkId] = useState(0);
-
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
-
   return (
     <StoryFieldContainer>
       <StoryLinkField

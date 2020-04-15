@@ -31,7 +31,7 @@ const Description = styled.p`
 const Footer = styled.footer`
   text-align: center;
   margin-top: auto;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   color: #6C6C6C;
 `;
 
@@ -51,8 +51,8 @@ function AboutPage(props) {
         It’s all free and open source!
       </Description>
 
-      <ActionButton isBigger={true}>
-        <StyledRegularLink href="https://github.com/lorow/Soliter">
+      <ActionButton isBigger>
+        <StyledRegularLink isBigger href="https://github.com/lorow/Soliter">
           Click here for source
         </StyledRegularLink>
       </ActionButton>

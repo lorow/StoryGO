@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StoryBarInputLabel = styled.label`
   width: 100%;
-  height: 50px;
+  min-height: 50px;
 
   background-color: transparent;
   display: block;
@@ -27,9 +27,13 @@ const StoryBarInputLabel = styled.label`
 `;
 
 const StoryBarInput = styled.input`
+  display: block;
+
+  margin-top: auto;
+  margin-bottom: auto;
+
   transition: all 0.2s;
   flex-grow: 1;
-	height: 100%;
   border: none;
   padding-left: 35px;
   color: ${props => props.shouldBeLighter ? '#535353' : '#9D9D9D'};
