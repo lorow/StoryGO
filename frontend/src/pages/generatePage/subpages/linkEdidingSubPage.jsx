@@ -1,6 +1,7 @@
 import React from 'react';
 import StoryLinkContainer from '../../../containers/storyLinkContainer'
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const LinkList = styled.ul`
   max-height: 60vh;
@@ -10,10 +11,15 @@ const LinkList = styled.ul`
 `;
 
 export function LinkEditingSubPage(props) {
+  const links = useSelector(state => state.links);
   return (
     <LinkList>
-      <StoryLinkContainer isInitial />
-      <StoryLinkContainer />
+      {
+        links &&
+        links.map(
+          entry => <StoryLinkContainer isInitial={entry.id === 0} />
+        )
+      }
     </LinkList>
   )
 }
