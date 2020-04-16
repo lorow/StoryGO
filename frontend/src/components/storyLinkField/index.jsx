@@ -11,7 +11,7 @@ const StoryBarInputLabel = styled.label`
   overflow: hidden;
   position: relative;
   text-align: center;
-
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   &:before {
@@ -31,7 +31,7 @@ const StoryBarInput = styled.input`
 
   margin-top: auto;
   margin-bottom: auto;
-
+  /* cursor: pointer; */
   transition: all 0.2s;
   flex-grow: 1;
   border: none;
@@ -41,7 +41,7 @@ const StoryBarInput = styled.input`
 	overflow: hidden;
 `;
 
-const DecorativeSpan = styled.span`
+const DecorativePlus = styled.span`
   transition: all 0.2s;
   margin-right: 40px;
   font-size: 40px;
@@ -52,15 +52,13 @@ const DecorativeSpan = styled.span`
 
 export default function StoryLinkField(props) {
   return (
-    <StoryBarInputLabel shouldBeDashed={props.isInitial ? false : !props.isLinkBeingEdited}>
+    <StoryBarInputLabel shouldBeDashed={props.isInitial ? false : (props.hasText ? false : !props.isLinkBeingEdited)}>
       <StoryBarInput
         placeholder={props.isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
-        shouldBeLighter={props.isInitial ? false : !props.isLinkBeingEdited}
-        onChange={(env) => console.log("changed")}
-        onFocus={(env) => props.setIsLinkBeingEdited(true)}
-        onBlur={(env) => props.setIsLinkBeingEdited(false)}
+        shouldBeLighter={props.isInitial ? false : (props.hasText ? false : !props.isLinkBeingEdited)}
+        onChange={props.handleLinkChange}
       />
-      <DecorativeSpan shouldDisappear={props.isInitial ? false : !props.isLinkBeingEdited}>+</DecorativeSpan>
+      <DecorativePlus shouldDisappear={props.isInitial ? false : !props.isLinkBeingEdited}>+</DecorativePlus>
     </StoryBarInputLabel>
   )
 }
