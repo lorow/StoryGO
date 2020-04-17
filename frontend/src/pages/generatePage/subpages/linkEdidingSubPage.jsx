@@ -14,7 +14,11 @@ export function LinkEditingSubPage() {
   const links = useSelector(state => state.links);
   return (
     <LinkList>
-      {links && links.map(entry => <EditableLink key={entry.id} isInitial={entry.id === 0} {...entry} />)}
+      {links && links.map(entry => <EditableLink
+        key={entry.id}
+        isTheLatest={entry.id === links[links.length - 1].id}
+        isInitial={entry.id === 0} {...entry}
+      />)}
     </LinkList>
   )
 }

@@ -13,7 +13,7 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-export default function EditableLink({ isInitial, id }) {
+export default function EditableLink({ isInitial, id, isTheLatest }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
   const [hasAddedNext, setHasAddedNext] = useState(false);
   const [hasText, setHasText] = useState(false);
