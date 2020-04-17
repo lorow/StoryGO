@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const StoryBarInputLabel = styled.label`
   width: 100%;
   min-height: 50px;
-
   background-color: transparent;
   display: block;
   overflow: hidden;
@@ -28,10 +27,8 @@ const StoryBarInputLabel = styled.label`
 
 const StoryBarInput = styled.input`
   display: block;
-
   margin-top: auto;
   margin-bottom: auto;
-  /* cursor: pointer; */
   transition: all 0.2s;
   flex-grow: 1;
   border: none;
@@ -50,15 +47,18 @@ const DecorativePlus = styled.span`
   opacity: ${props => props.shouldDisappear ? '100' : '0'}%;
 `;
 
-export default function StoryLinkField(props) {
+const StoryLinkField = React.memo(function ({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick }) {
   return (
-    <StoryBarInputLabel shouldBeDashed={props.isInitial ? false : (props.hasText ? false : !props.isLinkBeingEdited)}>
+    <StoryBarInputLabel shouldBeDashed={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}>
       <StoryBarInput
-        placeholder={props.isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
-        shouldBeLighter={props.isInitial ? false : (props.hasText ? false : !props.isLinkBeingEdited)}
-        onChange={props.handleLinkChange}
+        onClick={onClick}
+        placeholder={isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
+        shouldBeLighter={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}
+        onChange={handleLinkChange}
       />
-      <DecorativePlus shouldDisappear={props.isInitial ? false : !props.isLinkBeingEdited}>+</DecorativePlus>
+      <DecorativePlus shouldDisappear={isInitial ? false : !isLinkBeingEdited}>+</DecorativePlus>
     </StoryBarInputLabel>
   )
-}
+})
+
+export default StoryLinkField;

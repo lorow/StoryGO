@@ -14,12 +14,11 @@ const EditingBar = styled.div`
 
 
 
-export default function StoryLinkEditingBar(props) {
+const StoryLinkEditingBar = React.memo(function ({ shouldBeOpen }) {
   return (
-    <EditingBar shouldBeOpen={props.shouldBeOpen}>
-
-
-
+    <EditingBar shouldBeOpen={shouldBeOpen}>
     </EditingBar>
   )
-}
+})
+
+export default StoryLinkEditingBar

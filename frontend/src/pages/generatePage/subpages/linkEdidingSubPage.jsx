@@ -1,5 +1,5 @@
 import React from 'react';
-import StoryLinkContainer from '../../../containers/storyLinkContainer'
+import EditableLink from '../../../components/EditableLink'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -10,16 +10,11 @@ const LinkList = styled.ul`
   overflow-x: visible;
 `;
 
-export function LinkEditingSubPage(props) {
-  const links = useSelector(state => state.links);
+export const LinkEditingSubPage = React.memo(function () {
+  // const links = useSelector(state => state.links);
   return (
     <LinkList>
-      {
-        links &&
-        links.map(
-          entry => <StoryLinkContainer isInitial={entry.id === 0} />
-        )
-      }
+      <EditableLink key={0} isInitial />
     </LinkList>
   )
-}
+})

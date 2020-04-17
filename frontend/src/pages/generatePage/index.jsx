@@ -44,6 +44,7 @@ function GeneratePage(props) {
         <EditorGreeterTitle>Create your book</EditorGreeterTitle>
         <EditorGreeterSubTitle>Step 1/2 - add links</EditorGreeterSubTitle>
       </EditorGreeter>
+
       <Switch>
         {
           subRoutes.map(
