@@ -1,22 +1,13 @@
-export const Addlink = (payload) => ({
-  type: 'ADDE_LINK_TO_LIST',
-  payload: payload
+export const Addlink = () => ({
+  type: 'ADD_LINK_TO_LIST',
 })
 
-export const RemoveLink = (payload) => ({
+export const RemoveLink = (id) => ({
   type: 'REMOVE_LINK_FROM_LIST',
-  payload
+  id
 })
 
-export const UpdateLink = (payload) => ({
+export const UpdateLink = ({ id, data }) => ({
   type: 'UPDATE_LINK',
-  payload: payload,
-})
-
-export const AddTemporaryLinkEntry = () => ({
-  type: "ADD_TEMP_ENTRY",
-})
-
-export const RemoveTemporaryLinkEntry = () => ({
-  type: "REMOVE_TEMP_ENTRY",
+  payload: { id, data },
 })

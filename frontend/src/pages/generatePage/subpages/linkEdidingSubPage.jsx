@@ -11,10 +11,10 @@ const LinkList = styled.ul`
 `;
 
 export function LinkEditingSubPage() {
-  // const links = useSelector(state => state.links);
+  const links = useSelector(state => state.links);
   return (
     <LinkList>
-      <EditableLink key={0} isInitial />
+      {links && links.map(entry => <EditableLink key={entry.id} isInitial={entry.id === 0} {...entry} />)}
     </LinkList>
   )
 }

@@ -7,7 +7,7 @@ const EditingBar = styled.div`
   transform-origin: top;
   opacity: ${props => props.shouldBeOpen ? 1 : 0};
   height: ${props => props.shouldBeOpen ? '30px' : '0px'};
-
+  background-color: red;
   display: flex;
   flex-direction: row;
 `;

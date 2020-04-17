@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import StoryLinkField from './storyLinkField';
 import StoryLinkEditingBar from './storyLinkEditingBar';
 import styled from 'styled-components';
-import { useOnClickOutside } from '../hooks';
-import { AddTemporaryLinkEntry, RemoveTemporaryLinkEntry } from '../actions'
+import { useOnClickOutside, usePrevious } from '../hooks';
+import { UpdateLink, RemoveLink, Addlink } from '../actions'
 import { useDispatch } from 'react-redux';
 
 const StoryFieldContainer = styled.li`
@@ -13,21 +13,25 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-export default function EditableLink({ isInitial }) {
+export default function EditableLink({ isInitial, id }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
+  const [hasAddedNext, setHasAddedNext] = useState(false);
   const [hasText, setHasText] = useState(false);
-
   const dispatch = useDispatch();
 
   const ref = useRef();
   useOnClickOutside(ref, () => setIsLinkBeingEdited(false));
 
-  const handleLinkClick = useCallback(() => {
-
-  }, [])
+  useEffect(() => {
+    if (hasText && !hasAddedNext) {
+      dispatch(Addlink());
+      setHasAddedNext(true);
+    }
+  }, [dispatch, hasText, id, isInitial, hasAddedNext])
 
   const handleLinkChange = (e) => {
-
+    setHasText(Boolean(e.target.value))
+    dispatch(UpdateLink({ id: id, data: { link: e.target.value } }))
   }
 
   return (
@@ -36,7 +40,7 @@ export default function EditableLink({ isInitial }) {
         isInitial={isInitial}
         isLinkBeingEdited={isLinkBeingEdited}
         hasText={hasText}
-        onClick={handleLinkClick}
+        onClick={() => setIsLinkBeingEdited(true)}
         handleLinkChange={handleLinkChange}
       />
       <StoryLinkEditingBar shouldBeOpen={isLinkBeingEdited} />

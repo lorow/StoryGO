@@ -1,26 +1,24 @@
-const id = 0;
+let id = 0;
 
-export const links = (state = [{ id: id, link: "", entryType: { type: "", data: null, }, state: 'solid' }], action) => {
-  // NOTE: if a link can have to states:
-  // solid - can be deleted only by user
-  // temporary - it's the automatically added one, 
-  // can be deleted if the latest field is no longer being edited and has no text in it
+const InitialState = [
+  { id: id, link: "", entryType: { type: "", data: null, } },
+]
+
+export const links = (state = InitialState, action) => {
   console.log(action, state)
   switch (action.type) {
     case 'ADD_LINK_TO_LIST':
+      id += 1;
       return [
         ...state,
-        {
-          id: id + 1,
-          ...action.payload
-        }
+        { id: id, link: "", entryType: { type: "", data: null, } }
       ]
 
     case 'REMOVE_LINK_FROM_LIST':
       return state.filter(link => (link.id !== action.payload))
 
     case 'UPDATE_LINK':
-      return state.map(link => link.id === action.payload.id ? { ...action.payload } : link)
+      return state.map(link => link.id === action.payload.id ? { ...link, ...action.payload.data } : link)
 
     default: return state
   }

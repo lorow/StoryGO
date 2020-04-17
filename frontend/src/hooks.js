@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 
 export function useOnClickOutside(ref, handler) {
@@ -41,4 +41,11 @@ export function useDebounce(value, delay) {
     [value, delay] // Only re-call effect if value or delay changes
   );
   return debouncedValue;
+}
+
+export function usePrevious(value) {
+  const ref = useRef();
+
+  useEffect(() => { ref.current = value }, [value]);
+  return ref.current;
 }
