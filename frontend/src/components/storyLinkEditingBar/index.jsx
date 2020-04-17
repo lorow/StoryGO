@@ -12,13 +12,9 @@ const EditingBar = styled.div`
   flex-direction: row;
 `;
 
-
-
-const StoryLinkEditingBar = React.memo(function ({ shouldBeOpen }) {
+export default function StoryLinkEditingBar({ shouldBeOpen }) {
   return (
     <EditingBar shouldBeOpen={shouldBeOpen}>
     </EditingBar>
   )
-})
-
-export default StoryLinkEditingBar
+}

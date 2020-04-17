@@ -47,7 +47,7 @@ const DecorativePlus = styled.span`
   opacity: ${props => props.shouldDisappear ? '100' : '0'}%;
 `;
 
-const StoryLinkField = React.memo(function ({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick }) {
+export default function StoryLinkField({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick }) {
   return (
     <StoryBarInputLabel shouldBeDashed={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}>
       <StoryBarInput
@@ -59,6 +59,4 @@ const StoryLinkField = React.memo(function ({ isInitial, hasText, isLinkBeingEdi
       <DecorativePlus shouldDisappear={isInitial ? false : !isLinkBeingEdited}>+</DecorativePlus>
     </StoryBarInputLabel>
   )
-})
-
-export default StoryLinkField;
+}

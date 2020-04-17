@@ -10,11 +10,11 @@ const LinkList = styled.ul`
   overflow-x: visible;
 `;
 
-export const LinkEditingSubPage = React.memo(function () {
+export function LinkEditingSubPage() {
   // const links = useSelector(state => state.links);
   return (
     <LinkList>
       <EditableLink key={0} isInitial />
     </LinkList>
   )
-})
+}

@@ -13,7 +13,7 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-const EditableLink = React.memo(function ({ isInitial }) {
+export default function EditableLink({ isInitial }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
   const [hasText, setHasText] = useState(false);
 
@@ -42,6 +42,4 @@ const EditableLink = React.memo(function ({ isInitial }) {
       <StoryLinkEditingBar shouldBeOpen={isLinkBeingEdited} />
     </StoryFieldContainer>
   )
-});
-
-export default EditableLink;
+};
