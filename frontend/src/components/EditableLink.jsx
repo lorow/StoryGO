@@ -43,7 +43,7 @@ export default function EditableLink({ isInitial, id, isTheLatest }) {
         onClick={() => setIsLinkBeingEdited(true)}
         handleLinkChange={handleLinkChange}
       />
-      <StoryLinkSettingsBar shouldBeOpen={isLinkBeingEdited} />
+      <StoryLinkSettingsBar activeButtonType={"new_story"} shouldBeOpen={isLinkBeingEdited} />
     </StoryFieldContainer>
   )
 };
