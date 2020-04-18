@@ -17,7 +17,8 @@ export function LinkEditingSubPage() {
       {links && links.map(entry => <EditableLink
         key={entry.id}
         isTheLatest={entry.id === links[links.length - 1].id}
-        isInitial={entry.id === 0} {...entry}
+        isInitial={entry.id === 0}
+        selfEntry={entry}
       />)}
     </LinkList>
   )

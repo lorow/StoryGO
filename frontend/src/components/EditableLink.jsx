@@ -13,12 +13,11 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-export default function EditableLink({ isInitial, id, isTheLatest }) {
+export default function EditableLink({ isInitial, isTheLatest, selfEntry }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
   const [hasAddedNext, setHasAddedNext] = useState(false);
   const [hasText, setHasText] = useState(false);
   const dispatch = useDispatch();
-
   const ref = useRef();
   useOnClickOutside(ref, () => setIsLinkBeingEdited(false));
 
@@ -27,11 +26,11 @@ export default function EditableLink({ isInitial, id, isTheLatest }) {
       dispatch(Addlink());
       setHasAddedNext(true);
     }
-  }, [dispatch, hasText, id, isInitial, hasAddedNext])
+  }, [dispatch, hasText, selfEntry.id, isInitial, hasAddedNext])
 
   const handleLinkChange = (e) => {
     setHasText(Boolean(e.target.value))
-    dispatch(UpdateLink({ id: id, data: { link: e.target.value } }))
+    dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
   }
 
   return (
@@ -43,7 +42,7 @@ export default function EditableLink({ isInitial, id, isTheLatest }) {
         onClick={() => setIsLinkBeingEdited(true)}
         handleLinkChange={handleLinkChange}
       />
-      <StoryLinkSettingsBar activeButtonType={"new_story"} shouldBeOpen={isLinkBeingEdited} />
+      <StoryLinkSettingsBar activeButtonType={selfEntry.linkType.type} shouldBeOpen={isLinkBeingEdited} />
     </StoryFieldContainer>
   )
 };
