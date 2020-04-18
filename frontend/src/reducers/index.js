@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { links } from "./links";
+import { linksReducer } from "./linksReducer";
+import { pageReducer } from './pageReducer';
 
 export default combineReducers({
-  links: links
+  links: linksReducer,
+  epubPage: pageReducer,
 });

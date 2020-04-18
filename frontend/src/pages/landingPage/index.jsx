@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { StyledLink } from '../../components/styledLink';
-import { TwoColumnLayout } from '../../components/layouts';
+import { TwoColumnLayout } from '../../layouts';
 import ActionButton from '../../components/actionButton';
 import MainHeader from '../../components/mainHeader';
 

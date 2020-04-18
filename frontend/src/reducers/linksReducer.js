@@ -4,7 +4,7 @@ const InitialState = [
   { id: id, link: "", entryType: { type: "", data: null, } },
 ]
 
-export const links = (state = InitialState, action) => {
+export const linksReducer = (state = InitialState, action) => {
   console.log(action, state)
   switch (action.type) {
     case 'ADD_LINK_TO_LIST':

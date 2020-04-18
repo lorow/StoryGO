@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import StoryLinkField from './storyLinkField';
-import StoryLinkEditingBar from './storyLinkEditingBar';
+import StoryLinkSettingsBar from './storyLinkSettingsBar';
 import styled from 'styled-components';
 import { useOnClickOutside, usePrevious } from '../hooks';
 import { UpdateLink, RemoveLink, Addlink } from '../actions'
@@ -43,7 +43,7 @@ export default function EditableLink({ isInitial, id, isTheLatest }) {
         onClick={() => setIsLinkBeingEdited(true)}
         handleLinkChange={handleLinkChange}
       />
-      <StoryLinkEditingBar shouldBeOpen={isLinkBeingEdited} />
+      <StoryLinkSettingsBar shouldBeOpen={isLinkBeingEdited} />
     </StoryFieldContainer>
   )
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { OneColumnLayout } from '../../components/layouts';
+import { OneColumnLayout } from '../../layouts';
 import { StyledLink } from '../../components/styledLink';
 import ActionButton from '../../components/actionButton';
 import subRoutes from './subRoutes';

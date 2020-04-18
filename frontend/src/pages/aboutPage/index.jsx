@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import ActionButton from '../../components/actionButton';
 import { StyledRegularLink } from '../../components/styledLink';
-import { OneColumnLayout } from '../../components/layouts';
+import { OneColumnLayout } from '../../layouts';
 import MainHeader from '../../components/mainHeader';
 
 const DecorativeHR = styled.hr`
