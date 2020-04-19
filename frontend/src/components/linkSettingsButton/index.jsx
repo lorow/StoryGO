@@ -32,18 +32,19 @@ const SettingsChaperInput = styled.input`
   display: ${props => props.shouldDisplay ? 'inline-block' : "none"};
 `;
 
-export default function LinkSettingsButton({ gridTile, theme, text, currentlyActiveType, type, onClick }) {
+export default function LinkSettingsButton({ gridTile, theme, text, currentlyActiveType, type, onClick, chapterNumber }) {
   return (
     <>
       <SettingsButton
         isButtonActive={currentlyActiveType === type}
         theme={theme}
         gridTile={gridTile}
+        onClick={() => { onClick(type) }}
       >
         {text}
       </SettingsButton>
       {currentlyActiveType === "new_chapter" && type === "new_chapter" &&
-        <SettingsChaperInput shouldDisplay={currentlyActiveType === "new_chapter" && type === "new_chapter"} />
+        <SettingsChaperInput value={chapterNumber} shouldDisplay={currentlyActiveType === "new_chapter" && type === "new_chapter"} />
       }
     </>
   )

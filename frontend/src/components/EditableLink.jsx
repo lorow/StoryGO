@@ -36,6 +36,21 @@ export default function EditableLink({ isInitial, selfEntry }) {
     dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
   }
 
+  const handleBarButtonsClick = (buttonType) => {
+    switch (buttonType) {
+      case "new_story":
+        return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_story", data: null } } }))
+      case "new_chapter":
+        return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: 0 } } }))
+      case "delete":
+        return dispatch(RemoveLink(selfEntry.id))
+    }
+  }
+
+  const handleChapterIDChange = (chapterID) => {
+
+  }
+
   return (
     <StoryFieldContainer ref={ref}>
       <StoryLinkField
@@ -48,6 +63,8 @@ export default function EditableLink({ isInitial, selfEntry }) {
       <StoryLinkSettingsBar
         activeButtonType={selfEntry.linkType ? selfEntry.linkType.type : ""}
         shouldBeOpen={isLinkBeingEdited}
+        onClick={handleBarButtonsClick}
+        chapterNumber={selfEntry.linkType.data}
       />
     </StoryFieldContainer>
   )
