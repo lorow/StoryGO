@@ -36,7 +36,8 @@ function GeneratePage(props) {
   const [canProoceed, setCanProceed] = useState(false);
   const history = useHistory();
   useEffect(() => {
-    history.push('edit')
+    // make it 'edit' after you finish desiging the finish page
+    history.push('finish')
   }, [history])
 
   return (
@@ -63,6 +64,7 @@ function GeneratePage(props) {
         <NextStepButton
           isLinkActive={true}
           to="/generate/finish"
+          disabled={!canProoceed}
         >
           Next step ->
         </NextStepButton>

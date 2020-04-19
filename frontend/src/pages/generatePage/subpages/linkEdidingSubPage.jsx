@@ -8,6 +8,7 @@ const LinkList = styled.ul`
   height: 40vh;
   overflow-y:auto;
   overflow-x: visible;
+  margin-bottom: 30px;
 `;
 
 export function LinkEditingSubPage(props) {
