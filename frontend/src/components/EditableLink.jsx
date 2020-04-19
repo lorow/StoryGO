@@ -4,6 +4,7 @@ import StoryLinkSettingsBar from './storyLinkSettingsBar';
 import styled from 'styled-components';
 import { useOnClickOutside } from '../hooks';
 import { UpdateLink, RemoveLink, Addlink } from '../actions'
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 const StoryFieldContainer = styled.li`
@@ -28,9 +29,10 @@ export default function EditableLink({ isInitial, selfEntry }) {
 
     if (!isInitial && !selfEntry.link && hasAddedNext) {
       // it's empty, we should remove it
-      dispatch(RemoveLink(selfEntry.id))
+      if (!isLinkBeingEdited)
+        dispatch(RemoveLink(selfEntry.id))
     }
-  }, [dispatch, selfEntry, isInitial, hasAddedNext])
+  }, [dispatch, selfEntry, isInitial, hasAddedNext, isLinkBeingEdited])
 
   const handleLinkChange = (e) => {
     dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
@@ -51,8 +53,12 @@ export default function EditableLink({ isInitial, selfEntry }) {
     }
   }
 
-  const handleChapterIDChange = (chapterID) => {
-
+  const handleChapterIDChange = (e) => {
+    const newID = e.target.value;
+    if (!isNaN(newID))
+      dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: newID } } }))
+    else
+      toast.error("The chapter ID must be a number")
   }
 
   return (
@@ -69,6 +75,7 @@ export default function EditableLink({ isInitial, selfEntry }) {
         shouldBeOpen={isLinkBeingEdited}
         onClick={handleBarButtonsClick}
         chapterNumber={selfEntry.linkType.data}
+        handleChapterInput={handleChapterIDChange}
       />
     </StoryFieldContainer>
   )

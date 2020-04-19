@@ -14,7 +14,7 @@ const EditingBar = styled.div`
   grid-template-areas: "spacer spacer spacer spacer" "story chapter empty delete";
 `;
 
-export default function StoryLinkSettingsBar({ shouldBeOpen, activeButtonType, onClick, chapterNumber }) {
+export default function StoryLinkSettingsBar({ shouldBeOpen, activeButtonType, onClick, chapterNumber, handleChapterInput }) {
   return (
     <EditingBar shouldBeOpen={shouldBeOpen}>
       <LinkSettingsButton
@@ -33,6 +33,7 @@ export default function StoryLinkSettingsBar({ shouldBeOpen, activeButtonType, o
         currentlyActiveType={activeButtonType}
         onClick={onClick}
         chapterNumber={chapterNumber}
+        handleChapterInput={handleChapterInput}
       />
       <LinkSettingsButton
         gridTile={"delete"}
