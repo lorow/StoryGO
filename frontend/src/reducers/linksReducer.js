@@ -11,7 +11,7 @@ export const linksReducer = (state = InitialState, action) => {
       id += 1;
       return [
         ...state,
-        { id: id, link: "", entryType: { type: "", data: null, } }
+        { id: id, link: "", linkType: { type: "new_story", data: null, } }
       ]
 
     case 'REMOVE_LINK_FROM_LIST':

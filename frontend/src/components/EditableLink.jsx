@@ -13,23 +13,26 @@ const StoryFieldContainer = styled.li`
   }
 `;
 
-export default function EditableLink({ isInitial, isTheLatest, selfEntry }) {
+export default function EditableLink({ isInitial, selfEntry }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
   const [hasAddedNext, setHasAddedNext] = useState(false);
-  const [hasText, setHasText] = useState(false);
   const dispatch = useDispatch();
   const ref = useRef();
   useOnClickOutside(ref, () => setIsLinkBeingEdited(false));
 
   useEffect(() => {
-    if (hasText && !hasAddedNext) {
+    if (selfEntry.link && !hasAddedNext) {
       dispatch(Addlink());
       setHasAddedNext(true);
     }
-  }, [dispatch, hasText, selfEntry.id, isInitial, hasAddedNext])
+
+    if (!isInitial && !selfEntry.link && hasAddedNext) {
+      // it's empty, we should remove it
+      dispatch(RemoveLink(selfEntry.id))
+    }
+  }, [dispatch, selfEntry, isInitial, hasAddedNext])
 
   const handleLinkChange = (e) => {
-    setHasText(Boolean(e.target.value))
     dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
   }
 
@@ -38,11 +41,14 @@ export default function EditableLink({ isInitial, isTheLatest, selfEntry }) {
       <StoryLinkField
         isInitial={isInitial}
         isLinkBeingEdited={isLinkBeingEdited}
-        hasText={hasText}
+        hasText={Boolean(selfEntry.link)}
         onClick={() => setIsLinkBeingEdited(true)}
         handleLinkChange={handleLinkChange}
       />
-      <StoryLinkSettingsBar activeButtonType={selfEntry.linkType.type} shouldBeOpen={isLinkBeingEdited} />
+      <StoryLinkSettingsBar
+        activeButtonType={selfEntry.linkType ? selfEntry.linkType.type : ""}
+        shouldBeOpen={isLinkBeingEdited}
+      />
     </StoryFieldContainer>
   )
 };

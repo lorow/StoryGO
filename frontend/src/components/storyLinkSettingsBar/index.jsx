@@ -18,21 +18,21 @@ export default function StoryLinkSettingsBar({ shouldBeOpen, activeButtonType })
   return (
     <EditingBar shouldBeOpen={shouldBeOpen}>
       <LinkSettingsButton
-        gridSpace={"story"}
+        gridTile={"story"}
         theme={"main"}
         text={"New Story"}
         type={"new_story"}
         currentlyActiveType={activeButtonType}
       />
       <LinkSettingsButton
-        gridSpace={"chapter"}
+        gridTile={"chapter"}
         theme={"main"}
         text={"New chapter"}
         type={"new_chapter"}
         currentlyActiveType={activeButtonType}
       />
       <LinkSettingsButton
-        gridSpace={"delete"}
+        gridTile={"delete"}
         theme={"danger"}
         text={"Delete"}
         type={"delete"}

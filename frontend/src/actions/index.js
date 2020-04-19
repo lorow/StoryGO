@@ -4,7 +4,7 @@ export const Addlink = () => ({
 
 export const RemoveLink = (id) => ({
   type: 'REMOVE_LINK_FROM_LIST',
-  id
+  payload: id
 })
 
 export const UpdateLink = ({ id, data }) => ({
