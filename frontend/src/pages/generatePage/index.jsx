@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { OneColumnLayout } from '../../layouts';
 import { StyledLink } from '../../components/styledLink';
@@ -32,7 +32,8 @@ const NextStepButton = styled(StyledLink)`
 `;
 
 function GeneratePage(props) {
-
+  const [step, setStep] = useState(1);
+  const [canProoceed, setCanProceed] = useState(false);
   const history = useHistory();
   useEffect(() => {
     history.push('edit')
@@ -42,18 +43,23 @@ function GeneratePage(props) {
     <OneColumnLayout>
       <EditorGreeter>
         <EditorGreeterTitle>Create your book</EditorGreeterTitle>
-        <EditorGreeterSubTitle>Step 1/2 - add links</EditorGreeterSubTitle>
+        <EditorGreeterSubTitle>Step {step}/2 - add links</EditorGreeterSubTitle>
       </EditorGreeter>
 
       <Switch>
         {
           subRoutes.map(
-            ({ path, Component }) => (<Route key={path} path={path} component={Component} />)
+            ({ path, Component }) => (
+              <Route
+                key={path}
+                path={path}
+                render={routeProps => <Component {...routeProps} onEnter={setStep} validateProceed={setCanProceed} />}
+              />)
           )
         }
       </Switch>
 
-      <ActionButton>
+      <ActionButton disabled={!canProoceed}>
         <NextStepButton
           isLinkActive={true}
           to="/generate/finish"
