@@ -36,7 +36,7 @@ const SettingsChaperInput = styled.input`
   transform-origin: left;
   transform: scaleX(${props => props.shouldDisplay ? 1 : 0});
   width: 40px;
-  display: ${props => props.shouldDisplay ? 'block' : "none"};
+  display:block;
   background: transparent;
   color: ${props => props.colorTheme["main"].color};
   border: 1px solid ${props => props.colorTheme["main"].border};
@@ -57,7 +57,7 @@ export default function LinkSettingsButton({ gridTile, theme, text, currentlyAct
       >
         {text}
       </SettingsButton>
-      {currentlyActiveType === "new_chapter" && type === "new_chapter" &&
+      {type === "new_chapter" &&
         <SettingsChaperInput
           onChange={handleChapterInput}
           value={chapterNumber}
