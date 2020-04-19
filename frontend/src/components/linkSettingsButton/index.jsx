@@ -18,6 +18,10 @@ const LinkSettingsContainer = styled.div`
   display: flex;
   flex-direction: row;
   grid-area: ${props => props.gridTile};
+
+  &:disabled{
+    opacity: .8;
+  }
 `;
 
 const SettingsButton = styled.button`
