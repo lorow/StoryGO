@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import StoryLinkField from './storyLinkField';
 import StoryLinkSettingsBar from './storyLinkSettingsBar';
 import styled from 'styled-components';
-import { useOnClickOutside, usePrevious } from '../hooks';
+import { useOnClickOutside } from '../hooks';
 import { UpdateLink, RemoveLink, Addlink } from '../actions'
 import { useDispatch } from 'react-redux';
 
@@ -43,7 +43,11 @@ export default function EditableLink({ isInitial, selfEntry }) {
       case "new_chapter":
         return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: 0 } } }))
       case "delete":
-        return dispatch(RemoveLink(selfEntry.id))
+        if (!isInitial)
+          return dispatch(RemoveLink(selfEntry.id))
+        else return;
+
+      default: return;
     }
   }
 
