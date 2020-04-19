@@ -1,3 +1,4 @@
 ﻿flask
 EbookLib
 beautifulsoup4
+python-dotenv
