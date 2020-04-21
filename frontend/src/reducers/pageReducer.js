@@ -6,11 +6,18 @@ const InitialState = {
 export const pageReducer = (state = InitialState, action) => {
   switch (action.type) {
 
-    case "UPDATE_PAGE":
+    case "SET_COVER_TITLE":
       return {
         ...state,
-        ...action.payload
+        title: action.payload,
       }
+
+    case "SET_COVER_MINIATURE":
+      return {
+        ...state,
+        cover: action.payload.data
+      }
+
     default: return state;
   }
 }

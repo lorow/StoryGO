@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { UpdateCover } from '../../../actions/CoverActions';
+import { SetCoverTitle, SetCoverMiniature } from '../../../actions/CoverActions';
 import StoryLinkField from '../../../components/storyLinkField';
 import LinkSettingsButton from '../../../components/linkSettingsButton';
 import styled from 'styled-components';
@@ -67,9 +67,18 @@ export function CoverDefiningPage(props) {
 
   useEffect(() => { setHasAnImageBeenUploaded(epubPage.cover !== "no_cover") }, [epubPage.cover])
 
-  const handleResetClick = () => { dispatch(UpdateCover({ cover: "no_cover" })); }
+  const handleResetClick = () => { dispatch(SetCoverMiniature("no_cover")); }
 
-  const handleTitleChange = (e) => { dispatch(UpdateCover({ title: e.target.value })) }
+  const handleTitleChange = e => { dispatch(SetCoverTitle(e.target.value)) }
+
+  const handleImageUpload = e => {
+    const file = e.target.files[0];
+    dispatch(SetCoverMiniature({
+      file: file,
+      url: URL.createObjectURL(file),
+      name: file.name
+    }))
+  }
 
   return (
     <Container>
