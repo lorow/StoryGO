@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SetCoverTitle, SetCoverMiniature } from '../../../actions/CoverActions';
 import StoryLinkField from '../../../components/storyLinkField';
+import CoverImageUpload from '../../../components/CoverImageUpload';
 import LinkSettingsButton from '../../../components/linkSettingsButton';
 import styled from 'styled-components';
 
@@ -23,36 +24,6 @@ const CoverContainer = styled.section`
   grid-template-areas: "image empty" "image nocover" "image resetbtn";
 `;
 
-const Cover = styled.figure`
-  grid-area: image;
-  background-color: grey;
-  position: relative;
-  border: 3px solid white;
-`;
-
-const CoverImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const CoverQuestionMark = styled.img`
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  top: 13px;
-  right: 13px;
-`;
-
-const UploadIcon = styled.img`
-  position:absolute;
-  top: calc(50% - 40px);
-  left: calc(50% - 40px);
-
-  width: 80px;
-  height: 80px;
-`;
-
 export function CoverDefiningPage(props) {
   const onEnter = props.onEnter;
   const validateProceed = props.validateProceed;
@@ -65,7 +36,7 @@ export function CoverDefiningPage(props) {
     validateProceed(true);
   }, [onEnter, validateProceed])
 
-  useEffect(() => { setHasAnImageBeenUploaded(epubPage.cover !== "no_cover") }, [epubPage.cover])
+  useEffect(() => { setHasAnImageBeenUploaded(epubPage.cover !== "no_cover"); }, [epubPage.cover])
 
   const handleResetClick = () => { dispatch(SetCoverMiniature("no_cover")); }
 
@@ -73,6 +44,7 @@ export function CoverDefiningPage(props) {
 
   const handleImageUpload = e => {
     const file = e.target.files[0];
+    console.log(file)
     dispatch(SetCoverMiniature({
       file: file,
       url: URL.createObjectURL(file),
@@ -90,13 +62,13 @@ export function CoverDefiningPage(props) {
         value={epubPage.title}
       />
       <CoverContainer>
-        <Cover>
-          {!hasAnImageBeenUploaded &&
-            <UploadIcon src={"/upload.svg"} />
-          }
-          <CoverImage />
-          <CoverQuestionMark src={"/questionmark.svg"} />
-        </Cover>
+
+        <CoverImageUpload
+          hasAnImageBeenUploaded={hasAnImageBeenUploaded}
+          uploadedCover={epubPage.cover}
+          handleUpload={handleImageUpload}
+        />
+
         <LinkSettingsButton
           gridTile={"resetbtn"}
           onClick={handleResetClick}
