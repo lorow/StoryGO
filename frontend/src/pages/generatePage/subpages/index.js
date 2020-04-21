@@ -1,5 +1,5 @@
 import { SuccessEditingSubPage } from './successSubPage';
 import { LinkEditingSubPage } from './linkEdidingSubPage';
-import { FinishingEditingSubPage } from './finishingSubPage';
+import { CoverDefiningPage } from './coverDefining';
 
-export { SuccessEditingSubPage, LinkEditingSubPage, FinishingEditingSubPage };
+export { SuccessEditingSubPage, LinkEditingSubPage, CoverDefiningPage };

@@ -37,7 +37,7 @@ function GeneratePage(props) {
   const history = useHistory();
   useEffect(() => {
     // make it 'edit' after you finish desiging the finish page
-    history.push('finish')
+    history.push('cover')
   }, [history])
 
   return (

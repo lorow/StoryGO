@@ -1,6 +1,6 @@
 const InitialState = {
   title: "",
-  cover: "no cover",
+  cover: "no_cover",
 }
 
 export const pageReducer = (state = InitialState, action) => {

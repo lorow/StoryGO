@@ -3,7 +3,7 @@ import StoryLinkField from './storyLinkField';
 import StoryLinkSettingsBar from './storyLinkSettingsBar';
 import styled from 'styled-components';
 import { useOnClickOutside } from '../hooks';
-import { UpdateLink, RemoveLink, Addlink } from '../actions'
+import { UpdateLink, RemoveLink, Addlink } from '../actions/LinkActions';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 

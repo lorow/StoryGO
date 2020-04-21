@@ -29,6 +29,9 @@ const SettingsButton = styled.button`
   background-color: ${props => props.isButtonActive ? props.colorTheme[props.theme].background : 'transparent'};
   border: 1px solid ${props => props.colorTheme[props.theme].border};
   width: 100%;
+  &:disabled{
+    opacity: .5;
+  }
 `;
 
 SettingsButton.defaultProps = {
@@ -51,13 +54,14 @@ SettingsChaperInput.defaultProps = {
   colorTheme: theme,
 }
 
-export default function LinkSettingsButton({ gridTile, theme, text, currentlyActiveType, type, onClick, chapterNumber, handleChapterInput }) {
+export default function LinkSettingsButton({ gridTile, theme, text, currentlyActiveType, type, onClick, chapterNumber, handleChapterInput, disabled }) {
   return (
     <LinkSettingsContainer gridTile={gridTile}>
       <SettingsButton
         isButtonActive={currentlyActiveType === type}
         theme={theme}
         onClick={() => { onClick(type) }}
+        disabled={disabled}
       >
         {text}
       </SettingsButton>
