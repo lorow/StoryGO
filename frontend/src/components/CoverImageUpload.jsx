@@ -44,6 +44,7 @@ const UploadIcon = styled.label`
   height: 80px;
 `;
 
+
 export default function CoverImageUpload({ uploadedCover, handleUpload, hasAnImageBeenUploaded }) {
   return (
     <Cover>

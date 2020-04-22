@@ -4,7 +4,6 @@ const InitialState = {
 }
 
 export const pageReducer = (state = InitialState, action) => {
-  console.log(action)
   switch (action.type) {
 
     case "SET_COVER_TITLE":
