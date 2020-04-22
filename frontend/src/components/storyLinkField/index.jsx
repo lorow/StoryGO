@@ -47,11 +47,12 @@ const DecorativePlus = styled.span`
   opacity: ${props => props.shouldDisappear ? '100' : '0'}%;
 `;
 
-export default function StoryLinkField({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick, placeholder }) {
+export default function StoryLinkField({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick, placeholder, entry }) {
   return (
     <StoryBarInputLabel shouldBeDashed={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}>
       <StoryBarInput
         onClick={onClick}
+        value={entry ? entry.link : entry.title}
         placeholder={placeholder ? placeholder : isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
         shouldBeLighter={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}
         onChange={handleLinkChange}

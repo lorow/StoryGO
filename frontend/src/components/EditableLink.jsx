@@ -16,23 +16,22 @@ const StoryFieldContainer = styled.li`
 
 export default function EditableLink({ isInitial, selfEntry }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
-  const [hasAddedNext, setHasAddedNext] = useState(false);
   const dispatch = useDispatch();
   const ref = useRef();
   useOnClickOutside(ref, () => setIsLinkBeingEdited(false));
 
   useEffect(() => {
-    if (selfEntry.link && !hasAddedNext) {
+    if (selfEntry.link && !selfEntry.hasAddedNext) {
       dispatch(Addlink());
-      setHasAddedNext(true);
+      dispatch(UpdateLink({ id: selfEntry.id, data: { hasAddedNext: true } }));
     }
 
-    if (!isInitial && !selfEntry.link && hasAddedNext) {
+    if (!isInitial && !selfEntry.link && selfEntry.hasAddedNext) {
       // it's empty, we should remove it
       if (!isLinkBeingEdited)
         dispatch(RemoveLink(selfEntry.id))
     }
-  }, [dispatch, selfEntry, isInitial, hasAddedNext, isLinkBeingEdited])
+  }, [dispatch, selfEntry, isInitial, isLinkBeingEdited])
 
   const handleLinkChange = (e) => {
     dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
@@ -68,6 +67,7 @@ export default function EditableLink({ isInitial, selfEntry }) {
         isLinkBeingEdited={isLinkBeingEdited}
         hasText={Boolean(selfEntry.link)}
         onClick={() => setIsLinkBeingEdited(true)}
+        entry={selfEntry}
         handleLinkChange={handleLinkChange}
       />
       <StoryLinkSettingsBar

@@ -58,6 +58,7 @@ export function CoverDefiningPage(props) {
         isLinkBeingEdited
         placeholder={"Your custom title. Can be empty, the tilte from the first link will be used"}
         value={epubPage.title}
+        entry={epubPage}
       />
       <CoverContainer>
 
