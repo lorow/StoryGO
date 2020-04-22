@@ -25,8 +25,8 @@ const CoverImage = styled.img`
 
 const CoverQuestionMark = styled.img`
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   top: 13px;
   right: 13px;
 `;

@@ -44,11 +44,9 @@ export function CoverDefiningPage(props) {
 
   const handleImageUpload = e => {
     const file = e.target.files[0];
-    console.log(file)
     dispatch(SetCoverMiniature({
       file: file,
       url: URL.createObjectURL(file),
-      name: file.name
     }))
   }
 
