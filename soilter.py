@@ -1,11 +1,14 @@
 from flask import Flask, send_from_directory
 from werkzeug.exceptions import NotFound
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-app = Flask(__name__)
-app.config.from_object(
-    'nosleepToEpub.config.DevelopmentConfig',
-    static_folder='./frontend/build/'
-)
+
+app = Flask(__name__, static_folder='./frontend/build/')
+app.config.from_object('nosleepToEpub.config.DevelopmentConfig',)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 @app.route('/')
