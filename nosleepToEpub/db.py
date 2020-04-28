@@ -1,10 +1,27 @@
 from sqlalchemy.dialects.postgresql import UUID
+from abc import ABC
 from soilter import db
 import uuid
 
 
-class EpubEntry(db.Model):
+class Saveable():
+    """ Basic model implementing simple ADP-like save method and repr """
 
+    def __repr__(self):
+        return self.id
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+class EpubEntry(db.Model, Saveable):
+
+    __metaclass__ = db.Model
     __tablename__ = "epubentry"
 
     id = db.Column(
@@ -20,10 +37,10 @@ class EpubEntry(db.Model):
     filename = db.Column(db.String())
     has_been_downloaded = db.Column(db.Boolean(), default=False)
 
-    def __init__(self, filename, filepath, has_been_downloaded):
+    def __init__(self, filename, filepath="", has_been_downloaded=False):
         self.filename = filename
         self.filepath = filepath
         self.has_been_downloaded = has_been_downloaded
 
     def __repr__(self):
-        return f"book: {filename} - {id}"
+        return f"book: {self.filename} - {self.id}"

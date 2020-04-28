@@ -6,8 +6,7 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SECRET_KEY = "not going to do that again"
-    # os.environ['DATABASE_URL']
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost:5432/nosleep_db"
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
 class ProductionConfig(Config):

@@ -10,6 +10,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+# import the models so thatt they are known to flask
+from nosleepToEpub import db as nosleepModels  # noqa
+
 
 @app.route('/')
 def index():
