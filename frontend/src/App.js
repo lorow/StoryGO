@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import routes from './routes';
 import styled from 'styled-components';
 import Navbar from './components/navbar';
@@ -18,6 +19,7 @@ function App() {
     <Main>
       <Router>
         <Navbar location={Router.location} />
+        <ToastContainer position={toast.POSITION.TOP_RIGHT} />
         <Switch>
           {
             routes.map(

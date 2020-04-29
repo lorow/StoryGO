@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import StoryLinkField from './storyLinkField';
 import StoryLinkSettingsBar from './storyLinkSettingsBar';
 import styled from 'styled-components';
-import { useOnClickOutside, usePrevious } from '../hooks';
-import { UpdateLink, RemoveLink, Addlink } from '../actions'
+import { useOnClickOutside } from '../hooks';
+import { UpdateLink, RemoveLink, Addlink } from '../actions/LinkActions';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 const StoryFieldContainer = styled.li`
@@ -15,22 +16,22 @@ const StoryFieldContainer = styled.li`
 
 export default function EditableLink({ isInitial, selfEntry }) {
   const [isLinkBeingEdited, setIsLinkBeingEdited] = useState(false);
-  const [hasAddedNext, setHasAddedNext] = useState(false);
   const dispatch = useDispatch();
   const ref = useRef();
   useOnClickOutside(ref, () => setIsLinkBeingEdited(false));
 
   useEffect(() => {
-    if (selfEntry.link && !hasAddedNext) {
+    if (selfEntry.link && !selfEntry.hasAddedNext) {
       dispatch(Addlink());
-      setHasAddedNext(true);
+      dispatch(UpdateLink({ id: selfEntry.id, data: { hasAddedNext: true } }));
     }
 
-    if (!isInitial && !selfEntry.link && hasAddedNext) {
+    if (!isInitial && !selfEntry.link && selfEntry.hasAddedNext) {
       // it's empty, we should remove it
-      dispatch(RemoveLink(selfEntry.id))
+      if (!isLinkBeingEdited)
+        dispatch(RemoveLink(selfEntry.id))
     }
-  }, [dispatch, selfEntry, isInitial, hasAddedNext])
+  }, [dispatch, selfEntry, isInitial, isLinkBeingEdited])
 
   const handleLinkChange = (e) => {
     dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
@@ -43,12 +44,20 @@ export default function EditableLink({ isInitial, selfEntry }) {
       case "new_chapter":
         return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: 0 } } }))
       case "delete":
-        return dispatch(RemoveLink(selfEntry.id))
+        if (!isInitial)
+          return dispatch(RemoveLink(selfEntry.id))
+        else return;
+
+      default: return;
     }
   }
 
-  const handleChapterIDChange = (chapterID) => {
-
+  const handleChapterIDChange = (e) => {
+    const newID = e.target.value;
+    if (!isNaN(newID))
+      dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: newID } } }))
+    else
+      toast.error("The chapter ID must be a number")
   }
 
   return (
@@ -58,6 +67,7 @@ export default function EditableLink({ isInitial, selfEntry }) {
         isLinkBeingEdited={isLinkBeingEdited}
         hasText={Boolean(selfEntry.link)}
         onClick={() => setIsLinkBeingEdited(true)}
+        entry={selfEntry}
         handleLinkChange={handleLinkChange}
       />
       <StoryLinkSettingsBar
@@ -65,6 +75,7 @@ export default function EditableLink({ isInitial, selfEntry }) {
         shouldBeOpen={isLinkBeingEdited}
         onClick={handleBarButtonsClick}
         chapterNumber={selfEntry.linkType.data}
+        handleChapterInput={handleChapterIDChange}
       />
     </StoryFieldContainer>
   )

@@ -1,16 +1,23 @@
 const InitialState = {
   title: "",
-  cover: "no cover",
+  cover: "no_cover",
 }
 
 export const pageReducer = (state = InitialState, action) => {
   switch (action.type) {
 
-    case "UPDATE_PAGE":
+    case "SET_COVER_TITLE":
       return {
         ...state,
-        ...action.payload
+        title: action.payload,
       }
+
+    case "SET_COVER_MINIATURE":
+      return {
+        ...state,
+        cover: action.payload
+      }
+
     default: return state;
   }
 }

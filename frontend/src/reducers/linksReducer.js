@@ -1,7 +1,7 @@
 let id = 0;
 
 const InitialState = [
-  { id: id, link: "", linkType: { type: "new_story", data: null, } },
+  { id: id, link: "", linkType: { type: "new_story", data: null, }, hasAddedNext: false },
 ]
 
 export const linksReducer = (state = InitialState, action) => {

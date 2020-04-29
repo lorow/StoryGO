@@ -16,6 +16,15 @@ const Button = styled.button`
     border-color: #303030;
     background-color: #0085FF;
   }
+  
+  &:disabled{
+    opacity: .6;
+    cursor: not-allowed;
+  }
+
+  &:hover{
+    border-color: #00C3FF;
+  }
 `;
 
 export default function ActionButton(props) {
@@ -23,6 +32,7 @@ export default function ActionButton(props) {
     <Button
       isBigger={props.isBigger}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.children}
     </Button>
