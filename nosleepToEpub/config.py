@@ -4,6 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     DEBUG = False
     CSRF_ENABLED = True
     SECRET_KEY = "not going to do that again"
@@ -17,4 +18,4 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    FLASK_DEBUG = True
+    FLASK_ENV = "development"
