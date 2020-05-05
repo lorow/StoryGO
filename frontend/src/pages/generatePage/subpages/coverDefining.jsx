@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { SetCoverTitle, SetCoverMiniature } from '../../../actions/CoverActions';
-import StoryLinkField from '../../../components/storyLinkField';
-import CoverImageUpload from '../../../components/CoverImageUpload';
-import LinkSettingsButton from '../../../components/linkSettingsButton';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  SetCoverTitle,
+  SetCoverMiniature,
+} from "../../../actions/CoverActions";
+import StoryLinkField from "../../../components/storyLinkField";
+import CoverImageUpload from "../../../components/CoverImageUpload";
+import LinkSettingsButton from "../../../components/linkSettingsButton";
+import styled from "styled-components";
 
 const Container = styled.article`
   width: 50vw;
@@ -28,27 +31,35 @@ export function CoverDefiningPage(props) {
   const onEnter = props.onEnter;
   const validateProceed = props.validateProceed;
   const [hasAnImageBeenUploaded, setHasAnImageBeenUploaded] = useState(false);
-  const epubPage = useSelector(state => state.epubPage);
+  const epubPage = useSelector((state) => state.epubPage);
   const dispatch = useDispatch();
 
   useEffect(() => {
     onEnter(2);
     validateProceed(true);
-  }, [onEnter, validateProceed])
+  }, [onEnter, validateProceed]);
 
-  useEffect(() => { setHasAnImageBeenUploaded(epubPage.cover !== "no_cover"); }, [epubPage.cover])
+  useEffect(() => {
+    setHasAnImageBeenUploaded(epubPage.cover !== "no_cover");
+  }, [epubPage.cover]);
 
-  const handleResetClick = () => { dispatch(SetCoverMiniature("no_cover")); }
+  const handleResetClick = () => {
+    dispatch(SetCoverMiniature("no_cover"));
+  };
 
-  const handleTitleChange = e => { dispatch(SetCoverTitle(e.target.value)) }
+  const handleTitleChange = (e) => {
+    dispatch(SetCoverTitle(e.target.value));
+  };
 
-  const handleImageUpload = e => {
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    dispatch(SetCoverMiniature({
-      file: file,
-      url: URL.createObjectURL(file),
-    }))
-  }
+    dispatch(
+      SetCoverMiniature({
+        file: file,
+        url: URL.createObjectURL(file),
+      })
+    );
+  };
 
   return (
     <Container>
@@ -56,12 +67,13 @@ export function CoverDefiningPage(props) {
         onChange={handleTitleChange}
         hasText
         isLinkBeingEdited
-        placeholder={"Your custom title. Can be empty, the tilte from the first link will be used"}
+        placeholder={
+          "Your custom title. Can be empty, the tilte from the first link will be used"
+        }
         value={epubPage.title}
         entry={epubPage}
       />
       <CoverContainer>
-
         <CoverImageUpload
           hasAnImageBeenUploaded={hasAnImageBeenUploaded}
           uploadedCover={epubPage.cover}
@@ -78,5 +90,5 @@ export function CoverDefiningPage(props) {
         />
       </CoverContainer>
     </Container>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 [run]
-omit = 
+omit =
   *env/*,
   *migrations/*,
   *models.py*,
