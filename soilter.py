@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import make_response
 from flask import request
+from flask import Response
 from flask import send_from_directory
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -41,15 +42,23 @@ def generate():
     """
     from nosleepToEpub.processors.LinkProcessor import LinkProcessor
 
+    EpubEntry()
+
     processor = LinkProcessor(data=request.json, model_uuid="")
-    job = q.enqueue_call(processor.process_links)
+    job = q.enqueue_call(processor.start)
     return make_response(job.get_id(), 201)
 
 
 @app.route("/stream/<book_id>/")
 def stream(book_id):
-    job = Job.fetch(book_id, connection=conn)
-    return job.result if job.is_finished else "workin"
+    def test(book_id):
+
+        job = Job.fetch(book_id, connection=conn)
+        while not job.is_finished:
+            yield "workin"
+        yield job.result
+
+    return Response(test(book_id), mimetype="text/event-stream")
 
 
 if __name__ == "__main__":
