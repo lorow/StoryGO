@@ -6,14 +6,13 @@ from flask import send_from_directory
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from rq import Queue
-from rq.job import Job
 from werkzeug.exceptions import NotFound
 
 from worker import conn
 
 
 app = Flask(__name__, static_folder="./frontend/build/")
-app.config.from_object("nosleepToEpub.config.DevelopmentConfig",)
+app.config.from_object("nosleepToEpub.config.ProductionConfig",)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -50,14 +49,20 @@ def generate():
 
 @app.route("/stream/<book_id>/")
 def stream(book_id):
-    def test(book_id):
+    p = conn.pubsub()
+    p.psubscribe("book_status")
 
-        job = Job.fetch(book_id, connection=conn)
-        while not job.is_finished:
-            yield "workin"
-        yield job.result
+    def test(book_id, p):
 
-    return Response(test(book_id), mimetype="text/event-stream")
+        should_print = True
+
+        while should_print:
+            message = p.get_message()
+            status = message["data"]
+            yield bytes(status)
+
+    p.unsubscribe()
+    return Response(test(book_id, p), mimetype="text/event-stream")
 
 
 if __name__ == "__main__":

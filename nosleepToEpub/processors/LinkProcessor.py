@@ -1,6 +1,8 @@
 import asyncio
 import re
 
+from rq import get_current_job
+
 from .strategy import AbstractParsingStrategy
 
 
@@ -8,27 +10,40 @@ class LinkProcessor:
     def __init__(self, data: dict, model_uuid):
         self.data = data
         self.stories_by_link = {}
+        self.conn = None
         self.model_uuid = model_uuid
 
-    def start(self):
+    def start(self, **kwargs):
         """
         takes care of starting the asyncio loop
         and orchestrating the work
         """
         # let's create the async loop and run the actual start method
+
+        job = get_current_job()
+        if job:
+            self.conn = job.connection
+
+        self.conn.publish("book_status", "EMPIRE_DID_NOTHING_WRONG")
+
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self._start())
 
     async def _start(self):
+        self.conn.publish("book_status", "BEGIN_LINK_PROCESSING")
         await self._process_links()
-        # await self._process_cover()
-        # await self._stich_the_book()
-        # TODO add pubsub last message here
-        # so that the processing has finished
+
+        self.conn.publish("book_status", "PROCESS_COVER_DATA")
+        await self._process_cover()
+
+        self.conn.publish("book_status", "STICH_THE_BOOK")
+        await self._stich_the_book()
+        self.conn.publish("book_status", "BOOK_READY_FOR_DOWNLOAD")
 
     async def _process_links(self):
         """ Takes care of the processing of the links """
-        for link in self.data["data"]:
+        for index, link in enumerate(self.data["data"]):
+            self.conn.publish("book_status", f"PROCESSING_LINK_NR_{index + 1}")
             print(link)
 
     async def _process_cover(self) -> dict:
