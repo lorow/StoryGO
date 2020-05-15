@@ -42,8 +42,7 @@ def generate():
     """
     from nosleepToEpub.processors.LinkProcessor import LinkProcessor
 
-    EpubEntry()
-
+    # EpubEntry()
     processor = LinkProcessor(data=request.json, model_uuid="")
     job = q.enqueue_call(processor.start)
     return make_response(job.get_id(), 201)

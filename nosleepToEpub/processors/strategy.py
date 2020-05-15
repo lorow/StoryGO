@@ -1,7 +1,8 @@
 import abc
+from typing import Iterable
 
 
-class AbstractParsingInterface(metaclass=abc.ABCMeta):
+class AbstractParsingStrategy(metaclass=abc.ABCMeta):
     """
     An interface detailing how all the other
     parsing strategies should be implemented
@@ -22,9 +23,9 @@ class AbstractParsingInterface(metaclass=abc.ABCMeta):
     as this format will be then used to stich the epub together
     """
 
-    def __init__(self, link_data):
+    def __init__(self, link_data: Iterable[dict]):
         self.link_data = link_data
-        self.data = None
+        self.data = {}
 
     @classmethod
     def __subclasshook__(cls, subclass):

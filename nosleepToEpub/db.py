@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from soilter import db
 
 
-class Saveable:
+class ActiveRecordMixin:
     """ Basic model implementing simple ADP-like save method and repr """
 
     def __repr__(self):
@@ -20,7 +20,7 @@ class Saveable:
         db.session.commit()
 
 
-class EpubEntry(db.Model, Saveable):
+class EpubEntry(db.Model, ActiveRecordMixin):
 
     __metaclass__ = db.Model
     __tablename__ = "epubentry"

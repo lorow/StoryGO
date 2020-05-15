@@ -14,3 +14,26 @@ class TestLinkProcessor:
 
         # TODO replace it with the actual strategries when they are done
         assert determined_strategy == "nosleep_strategy"
+
+    @pytest.mark.asyncio
+    async def test__process_cover__cover_data_provided(self):
+        cover_data = {"cover": {"cover_title": "a title"}}
+
+        processor = LinkProcessor(data=cover_data, model_uuid="")
+        cover = await processor._process_cover()
+
+        assert cover["title"] == "a title"
+
+    @pytest.mark.asyncio
+    async def test__process_cover__processed_link_injected(self):
+        common_link = "https://www.reddit.com/r/nosleep/comments/fz2na2/a_story/"
+        data = {
+            "data": [{"link": common_link, "linkType": {"type": "new_story"}}],
+            "cover": {},
+        }
+
+        processor = LinkProcessor(data=data, model_uuid="")
+        processor.stories_by_link = {common_link: {"title": "a story"}}
+
+        cover = await processor._process_cover()
+        assert cover["title"] == "a story"
