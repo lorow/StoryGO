@@ -24,27 +24,33 @@ class LinkProcessor:
         if job:
             self.conn = job.connection
 
-        self.conn.publish("book_status", "EMPIRE_DID_NOTHING_WRONG")
-
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self._start())
 
     async def _start(self):
-        self.conn.publish("book_status", "BEGIN_LINK_PROCESSING")
+        await self._notify_user("EMPIRE_DID_NOTHING_WRONG")
+        await self._notify_user("BEGIN_LINK_PROCESSING")
         await self._process_links()
 
-        self.conn.publish("book_status", "PROCESS_COVER_DATA")
+        await self._notify_user("PROCESSING_COVER_DATA")
         await self._process_cover()
 
-        self.conn.publish("book_status", "STICH_THE_BOOK")
+        await self._notify_user("STICHING_THE_BOOK")
         await self._stich_the_book()
-        self.conn.publish("book_status", "BOOK_READY_FOR_DOWNLOAD")
+        await self._notify_user("BOOK_READY_FOR_DOWNLOAD")
 
     async def _process_links(self):
         """ Takes care of the processing of the links """
         for index, link in enumerate(self.data["data"]):
-            self.conn.publish("book_status", f"PROCESSING_LINK_NR_{index + 1}")
+            i = 0
+            while 1 < 9999:
+                i = i + 1
+                await self._notify_user(f"PROCESSING_LINK_NR_{index + i}")
+
             print(link)
+
+    async def _notify_user(self, status: str):
+        self.conn.publish(self.model_uuid, status)
 
     async def _process_cover(self) -> dict:
         """

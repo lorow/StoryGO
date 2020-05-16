@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from flask import Flask
 from flask import make_response
 from flask import request
@@ -42,27 +44,34 @@ def generate():
     from nosleepToEpub.processors.LinkProcessor import LinkProcessor
 
     # EpubEntry()
-    processor = LinkProcessor(data=request.json, model_uuid="")
-    job = q.enqueue_call(processor.start)
-    return make_response(job.get_id(), 201)
+    possible_uuid = uuid4()
+    processor = LinkProcessor(data=request.json, model_uuid=str(possible_uuid))
+    q.enqueue_call(processor.start)
+    return make_response(str(possible_uuid), 201)
 
 
 @app.route("/stream/<book_id>/")
 def stream(book_id):
     p = conn.pubsub()
-    p.psubscribe("book_status")
+    p.psubscribe(book_id)
 
-    def test(book_id, p):
-
+    def progress_notifications(p):
         should_print = True
 
         while should_print:
             message = p.get_message()
-            status = message["data"]
+            if message:
+                status = message["data"]
+            else:
+                status = "NO_MESSAGES".encode("utf-8")
+
+            if status in [b"NO_MESSAGES", b"BOOK_READY_FOR_DOWNLOAD"]:
+                should_print = False
+            print(status, type(status))
             yield bytes(status)
 
     p.unsubscribe()
-    return Response(test(book_id, p), mimetype="text/event-stream")
+    return Response(progress_notifications(p), mimetype="text/event-stream")
 
 
 if __name__ == "__main__":
