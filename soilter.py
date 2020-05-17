@@ -14,7 +14,7 @@ from worker import conn
 
 
 app = Flask(__name__, static_folder="./frontend/build/")
-app.config.from_object("nosleepToEpub.config.ProductionConfig",)
+app.config.from_object("nosleepToEpub.config.DevelopmentConfig",)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

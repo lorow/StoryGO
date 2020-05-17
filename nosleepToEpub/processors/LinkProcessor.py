@@ -4,6 +4,8 @@ import re
 from rq import get_current_job
 
 from .strategy import AbstractParsingStrategy
+from .strategy import NosleepParser
+from .strategy import WritingPromptsParser
 
 
 class LinkProcessor:
@@ -42,12 +44,12 @@ class LinkProcessor:
     async def _process_links(self):
         """ Takes care of the processing of the links """
         for index, link in enumerate(self.data["data"]):
-            i = 0
-            while 1 < 9999:
-                i = i + 1
-                await self._notify_user(f"PROCESSING_LINK_NR_{index + i}")
+            await self._notify_user(f"PROCESSING_LINK_NR_{index}")
 
-            print(link)
+            strategy = await self._determine_strategy(link["link"])
+            processor = strategy(link_data=link)
+
+            self.stories_by_link[link["link"]] = await processor.parse_data()
 
     async def _notify_user(self, status: str):
         self.conn.publish(self.model_uuid, status)
@@ -82,8 +84,8 @@ class LinkProcessor:
         # matches anything that's /r/anything_up_to/
         subreddit_regex = r"\/r\/.+\/"
         strategies = {
-            "/r/nosleep/": "nosleep_strategy",
-            "/r/WritingPrompts/": "writing_prompts strategy",
+            "/r/nosleep/": NosleepParser,
+            "/r/WritingPrompts/": WritingPromptsParser,
         }
 
         return strategies.get(
