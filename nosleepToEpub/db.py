@@ -1,10 +1,11 @@
-from sqlalchemy.dialects.postgresql import UUID
-from abc import ABC
-from soilter import db
 import uuid
 
+from sqlalchemy.dialects.postgresql import UUID
 
-class Saveable():
+from soilter import db
+
+
+class ActiveRecordMixin:
     """ Basic model implementing simple ADP-like save method and repr """
 
     def __repr__(self):
@@ -19,7 +20,7 @@ class Saveable():
         db.session.commit()
 
 
-class EpubEntry(db.Model, Saveable):
+class EpubEntry(db.Model, ActiveRecordMixin):
 
     __metaclass__ = db.Model
     __tablename__ = "epubentry"
@@ -29,7 +30,7 @@ class EpubEntry(db.Model, Saveable):
         primary_key=True,
         default=uuid.uuid4,
         unique=True,
-        nullable=False
+        nullable=False,
     )
 
     # here will be stored the location of the epub

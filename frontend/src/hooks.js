@@ -1,25 +1,21 @@
-import { useEffect, useState, useRef } from 'react';
-
+import { useEffect, useState, useRef } from "react";
 
 export function useOnClickOutside(ref, handler) {
-  useEffect(
-    () => {
-      const listener = event => {
-        // Do nothing if clicking ref's element or descendent elements
-        if (!ref.current || ref.current.contains(event.target)) {
-          return;
-        }
-        handler(event);
-      };
-      document.addEventListener('mousedown', listener);
-      document.addEventListener('touchstart', listener);
-      return () => {
-        document.removeEventListener('mousedown', listener);
-        document.removeEventListener('touchstart', listener);
-      };
-    },
-    [ref, handler]
-  );
+  useEffect(() => {
+    const listener = (event) => {
+      // Do nothing if clicking ref's element or descendent elements
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
 }
 
 export function useDebounce(value, delay) {
@@ -46,6 +42,8 @@ export function useDebounce(value, delay) {
 export function usePrevious(value) {
   const ref = useRef();
 
-  useEffect(() => { ref.current = value }, [value]);
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
   return ref.current;
 }

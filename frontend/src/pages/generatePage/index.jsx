@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
-import { OneColumnLayout } from '../../layouts';
-import ActionButton from '../../components/actionButton';
-import subRoutes from './subRoutes';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import { OneColumnLayout } from "../../layouts";
+import ActionButton from "../../components/actionButton";
+import subRoutes from "./subRoutes";
+import styled from "styled-components";
 
 const EditorGreeter = styled.article`
   display: grid;
@@ -27,8 +27,8 @@ const EditorGreeterSubTitle = styled.p`
 `;
 
 const NextStepButton = styled(ActionButton)`
-  margin: 0; 
-  width:100%;
+  margin: 0;
+  width: 100%;
   height: 100%;
   display: block;
 `;
@@ -54,19 +54,18 @@ function GeneratePage(props) {
 
   useEffect(() => {
     // make it 'edit' after you finish desiging the finish page
-    history.push('edit')
-  }, [history])
+    history.push("edit");
+  }, [history]);
 
   const handleButtonClick = () => {
     if (step === lastStep) {
       // we're at the very end, call the saga now.
-    }
-    else {
+    } else {
       // this will have to be refactored if there will be more steps, but for now
-      // simply push the cover path 
-      history.push("cover")
+      // simply push the cover path
+      history.push("cover");
     }
-  }
+  };
 
   return (
     <OneColumnLayout>
@@ -77,27 +76,27 @@ function GeneratePage(props) {
       </EditorGreeter>
 
       <Switch>
-        {
-          subRoutes.map(
-            ({ path, Component }) => (
-              <Route
-                key={path}
-                path={path}
-                render={routeProps => <Component {...routeProps} onEnter={setStep} validateProceed={setCanProceed} />}
-              />)
-          )
-        }
+        {subRoutes.map(({ path, Component }) => (
+          <Route
+            key={path}
+            path={path}
+            render={(routeProps) => (
+              <Component
+                {...routeProps}
+                onEnter={setStep}
+                validateProceed={setCanProceed}
+              />
+            )}
+          />
+        ))}
       </Switch>
 
-      <NextStepButton
-        onClick={handleButtonClick}
-        disabled={!canProoceed}
-      >
+      <NextStepButton onClick={handleButtonClick} disabled={!canProoceed}>
         {step !== lastStep && "Next step ->"}
         {step === lastStep && "Get me that book!"}
       </NextStepButton>
     </OneColumnLayout>
-  )
+  );
 }
 
 export default GeneratePage;

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const HiddenInput = styled.input`
   width: 0.1px;
@@ -32,7 +32,7 @@ const CoverQuestionMark = styled.img`
 `;
 
 const UploadIcon = styled.label`
-  position:absolute;
+  position: absolute;
   top: calc(50% - 40px);
   left: calc(50% - 40px);
   background-image: url("/upload.svg");
@@ -44,16 +44,22 @@ const UploadIcon = styled.label`
   height: 80px;
 `;
 
-
-export default function CoverImageUpload({ uploadedCover, handleUpload, hasAnImageBeenUploaded }) {
+export default function CoverImageUpload({
+  uploadedCover,
+  handleUpload,
+  hasAnImageBeenUploaded,
+}) {
   return (
     <Cover>
-      <HiddenInput onChange={handleUpload} id="image_upload" name="miniature" type="file" />
-      {!hasAnImageBeenUploaded &&
-        <UploadIcon htmlFor="image_upload" />
-      }
+      <HiddenInput
+        onChange={handleUpload}
+        id="image_upload"
+        name="miniature"
+        type="file"
+      />
+      {!hasAnImageBeenUploaded && <UploadIcon htmlFor="image_upload" />}
       <CoverImage src={uploadedCover ? uploadedCover.url : ""} />
       <CoverQuestionMark src={"/questionmark.svg"} />
     </Cover>
-  )
+  );
 }

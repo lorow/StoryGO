@@ -1,5 +1,4 @@
-import { OneColumnLayout } from './oneColumnLayout';
-import { TwoColumnLayout } from './twoColumnLayout';
-
+import { OneColumnLayout } from "./oneColumnLayout";
+import { TwoColumnLayout } from "./twoColumnLayout";
 
 export { OneColumnLayout, TwoColumnLayout };

@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
-
+import React from "react";
+import styled from "styled-components";
 
 const StoryBarInputLabel = styled.label`
   width: 100%;
@@ -17,7 +16,8 @@ const StoryBarInputLabel = styled.label`
     transition: all 0.2s;
     content: "";
     position: absolute;
-    border: 10px ${props => props.shouldBeDashed ? 'dashed #535353' : 'solid white'};
+    border: 10px
+      ${(props) => (props.shouldBeDashed ? "dashed #535353" : "solid white")};
     top: -7px;
     bottom: -7px;
     left: -7px;
@@ -33,9 +33,9 @@ const StoryBarInput = styled.input`
   flex-grow: 1;
   border: none;
   padding-left: 35px;
-  color: ${props => props.shouldBeLighter ? '#535353' : '#9D9D9D'};
+  color: ${(props) => (props.shouldBeLighter ? "#535353" : "#9D9D9D")};
   background-color: transparent;
-	overflow: hidden;
+  overflow: hidden;
 `;
 
 const DecorativePlus = styled.span`
@@ -44,20 +44,40 @@ const DecorativePlus = styled.span`
   font-size: 40px;
   height: 100%;
   line-height: 50px;
-  opacity: ${props => props.shouldDisappear ? '100' : '0'}%;
+  opacity: ${(props) => (props.shouldDisappear ? "100" : "0")}%;
 `;
 
-export default function StoryLinkField({ isInitial, hasText, isLinkBeingEdited, handleLinkChange, onClick, placeholder, entry }) {
+export default function StoryLinkField({
+  isInitial,
+  hasText,
+  isLinkBeingEdited,
+  handleLinkChange,
+  onClick,
+  placeholder,
+  entry,
+}) {
   return (
-    <StoryBarInputLabel shouldBeDashed={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}>
+    <StoryBarInputLabel
+      shouldBeDashed={isInitial ? false : hasText ? false : !isLinkBeingEdited}
+    >
       <StoryBarInput
         onClick={onClick}
         value={entry ? entry.link : entry.title}
-        placeholder={placeholder ? placeholder : isInitial ? "Post a link to the story you want as a epub" : "Add another link"}
-        shouldBeLighter={isInitial ? false : (hasText ? false : !isLinkBeingEdited)}
+        placeholder={
+          placeholder
+            ? placeholder
+            : isInitial
+            ? "Post a link to the story you want as a epub"
+            : "Add another link"
+        }
+        shouldBeLighter={
+          isInitial ? false : hasText ? false : !isLinkBeingEdited
+        }
         onChange={handleLinkChange}
       />
-      <DecorativePlus shouldDisappear={isInitial ? false : !isLinkBeingEdited}>+</DecorativePlus>
+      <DecorativePlus shouldDisappear={isInitial ? false : !isLinkBeingEdited}>
+        +
+      </DecorativePlus>
     </StoryBarInputLabel>
-  )
+  );
 }

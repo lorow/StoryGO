@@ -1,9 +1,7 @@
-import pytest
 from ..db import EpubEntry
 
 
-class TestModels():
-
+class TestModels:
     def test_saving_method(self):
         """
             Testing if the custom save() function
