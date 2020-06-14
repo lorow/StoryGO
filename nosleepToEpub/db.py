@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy.dialects.postgresql import UUID
 
-from soilter import db
+from app import db 
 
 
 class ActiveRecordMixin:
