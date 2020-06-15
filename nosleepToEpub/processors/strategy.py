@@ -1,6 +1,6 @@
 import abc
 from typing import Iterable
-
+from bs4 import BeautifulSoup as bs
 import aiohttp
 
 
@@ -33,8 +33,10 @@ class AbstractParsingStrategy(metaclass=abc.ABCMeta):
         return (
             hasattr(subclass, "_fetch_data")
             and callable(subclass._fetch_data)
-            and hasattr(subclass, "_parse_data")
-            and callable(subclass._parse_data)
+            and hasattr(subclass, "_get_author")
+            and callable(subclass._get_author)
+            and hasattr(subclass, "_get_content")
+            and callable(subclass._get_content)
             and hasattr(subclass, "parse_data")
             and callable(subclass.parse_data)
             or NotImplemented
@@ -43,26 +45,32 @@ class AbstractParsingStrategy(metaclass=abc.ABCMeta):
     async def parse_data(self) -> dict:
         "parses the data and returns is as a dict"
         await self._fetch_data()
-        await self._parse_data()
+        
         return self.data
 
     async def _fetch_data(self) -> None:
         """ Sends a request to the link, and stores the retrieved html """
         async with aiohttp.ClientSession as cs:
             async with cs.get(self.link_data["link"]) as resp:
-                self.response_data = resp.text()
-
+                self.response_data = bs(resp.text(), "html5lib")
+    
     @abc.abstractclassmethod
-    async def _parse_data(self) -> None:
-        """ does the actual parsing of the downloaded data """
+    async def _get_author(self):
+        "Gathers all info about the author of the post"
         raise NotImplementedError
 
+    @abc.abstractclassmethod
+    async def _get_content(self):
+        "Gathers the actual story content"
+        raise NotImplementedError
 
 class NosleepParser(AbstractParsingStrategy):
-    async def _parse_data(self):
+    
+    async def _get_author(self):
         pass
 
+    async def _get_content(self):
+        pass
 
 class WritingPromptsParser(AbstractParsingStrategy):
-    async def _parse_data(self):
-        pass
+    pass
