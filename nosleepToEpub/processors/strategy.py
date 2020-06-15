@@ -12,7 +12,7 @@ class AbstractParsingStrategy(metaclass=abc.ABCMeta):
     The strategy does two things, it fetches the data
     And it also parses it into the correct data format
     For ease of use, one can implement it such that the data returned
-    is similar to this:
+    is similar to this: 
     {
         "type": "story" | "chapter",
         "meta": None | {"chapter_id": int}
