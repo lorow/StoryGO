@@ -1,7 +1,5 @@
 import abc
 from typing import Iterable
-from bs4 import BeautifulSoup as bs
-import aiohttp
 
 
 class AbstractParsingStrategy(metaclass=abc.ABCMeta):
@@ -23,54 +21,51 @@ class AbstractParsingStrategy(metaclass=abc.ABCMeta):
     }
     """
 
-    def __init__(self, link_data: Iterable[dict]):
+    def __init__(self, link_data: Iterable[dict], reddit_praw):
         self.link_data = link_data
-        self.response_data = None
+        self.submission = None
         self.data = {}
+        self.praw = reddit_praw
 
     @classmethod
     def __subclasshook__(cls, subclass):
-        return (
-            hasattr(subclass, "_fetch_data")
-            and callable(subclass._fetch_data)
-            and hasattr(subclass, "_get_author")
-            and callable(subclass._get_author)
-            and hasattr(subclass, "_get_content")
+        return (hasattr(subclass, "_get_content")
             and callable(subclass._get_content)
-            and hasattr(subclass, "parse_data")
-            and callable(subclass.parse_data)
+            and hasattr(subclass, "_process_data")
+            and callable(subclass._process_data)
             or NotImplemented
         )
 
     async def parse_data(self) -> dict:
         "parses the data and returns is as a dict"
         await self._fetch_data()
-        
+        await self._process_data()
         return self.data
 
     async def _fetch_data(self) -> None:
-        """ Sends a request to the link, and stores the retrieved html """
-        async with aiohttp.ClientSession as cs:
-            async with cs.get(self.link_data["link"]) as resp:
-                self.response_data = bs(resp.text(), "html5lib")
+        """ Sends a request to the link, and stores the retrieved content """
+        self.submission = self.praw.submission(url=self.link_data["link"])
     
-    @abc.abstractclassmethod
     async def _get_author(self):
-        "Gathers all info about the author of the post"
-        raise NotImplementedError
+        "Gathers all info about the author of the post: Redditor instance"
+        if self.submission:
+            return self.submission.author
+
+    async def _get_title(self):
+        if self.submission:
+            return self.submission.title
 
     @abc.abstractclassmethod
     async def _get_content(self):
         "Gathers the actual story content"
         raise NotImplementedError
 
+    @abc.abstractclassmethod
+    async def _process_data(self):
+        """ Does the actual processing of the data"""
+        raise NotImplementedError
+
 class NosleepParser(AbstractParsingStrategy):
-    
-    async def _get_author(self):
-        pass
 
     async def _get_content(self):
         pass
-
-class WritingPromptsParser(AbstractParsingStrategy):
-    pass

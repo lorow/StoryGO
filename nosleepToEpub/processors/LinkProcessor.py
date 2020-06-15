@@ -1,11 +1,10 @@
 import asyncio
 import re
-
+import os
+import praw
 from rq import get_current_job
 
-from .strategy import AbstractParsingStrategy
-from .strategy import NosleepParser
-from .strategy import WritingPromptsParser
+from .strategy import AbstractParsingStrategy, NosleepParser
 
 
 class LinkProcessor:
@@ -14,6 +13,7 @@ class LinkProcessor:
         self.stories_by_link = {}
         self.conn = None
         self.model_uuid = model_uuid
+        self.praw = None
 
     def start(self, **kwargs):
         """
@@ -25,6 +25,13 @@ class LinkProcessor:
         job = get_current_job()
         if job:
             self.conn = job.connection
+
+        # also, setup the praw instance
+        self.praw = praw.Reddit(
+            client_id=os.environ.get("reddit_client_id", ""),
+            client_secret=os.environ.get("reddit_secret", ""),
+            user_agent= f'<web>:<{os.environ.get("reddit_client_id", "")}>:<0.1> (by u/<{os.environ.get("reddit_name")}>)'
+        )
 
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self._start())
@@ -47,7 +54,7 @@ class LinkProcessor:
             await self._notify_user(f"PROCESSING_LINK_NR_{index}")
 
             strategy = await self._determine_strategy(link["link"])
-            processor = strategy(link_data=link)
+            processor = strategy(link_data=link, reddit_praw=self.praw)
 
             self.stories_by_link[link["link"]] = await processor.parse_data()
 
@@ -85,7 +92,6 @@ class LinkProcessor:
         subreddit_regex = r"\/r\/.+\/"
         strategies = {
             "/r/nosleep/": NosleepParser,
-            "/r/WritingPrompts/": WritingPromptsParser,
         }
 
         return strategies.get(
