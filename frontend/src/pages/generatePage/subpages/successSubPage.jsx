@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export function SuccessEditingSubPage(props) {
-  return (
-    <div>Success!</div>
-  )
+  return <div>Success!</div>;
 }

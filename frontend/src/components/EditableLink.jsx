@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import StoryLinkField from './storyLinkField';
-import StoryLinkSettingsBar from './storyLinkSettingsBar';
-import styled from 'styled-components';
-import { useOnClickOutside } from '../hooks';
-import { UpdateLink, RemoveLink, Addlink } from '../actions/LinkActions';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from "react";
+import StoryLinkField from "./storyLinkField";
+import StoryLinkSettingsBar from "./storyLinkSettingsBar";
+import styled from "styled-components";
+import { useOnClickOutside } from "../hooks";
+import { UpdateLink, RemoveLink, Addlink } from "../actions/LinkActions";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const StoryFieldContainer = styled.li`
   width: 50vw;
-  &:not(:first-of-type){
+  &:not(:first-of-type) {
     margin-top: 30px;
   }
 `;
@@ -28,37 +28,50 @@ export default function EditableLink({ isInitial, selfEntry }) {
 
     if (!isInitial && !selfEntry.link && selfEntry.hasAddedNext) {
       // it's empty, we should remove it
-      if (!isLinkBeingEdited)
-        dispatch(RemoveLink(selfEntry.id))
+      if (!isLinkBeingEdited) dispatch(RemoveLink(selfEntry.id));
     }
-  }, [dispatch, selfEntry, isInitial, isLinkBeingEdited])
+  }, [dispatch, selfEntry, isInitial, isLinkBeingEdited]);
 
   const handleLinkChange = (e) => {
-    dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }))
-  }
+    dispatch(UpdateLink({ id: selfEntry.id, data: { link: e.target.value } }));
+  };
 
   const handleBarButtonsClick = (buttonType) => {
     switch (buttonType) {
       case "new_story":
-        return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_story", data: null } } }))
+        return dispatch(
+          UpdateLink({
+            id: selfEntry.id,
+            data: { linkType: { type: "new_story", data: null } },
+          })
+        );
       case "new_chapter":
-        return dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: 0 } } }))
+        return dispatch(
+          UpdateLink({
+            id: selfEntry.id,
+            data: { linkType: { type: "new_chapter", data: 0 } },
+          })
+        );
       case "delete":
-        if (!isInitial)
-          return dispatch(RemoveLink(selfEntry.id))
+        if (!isInitial) return dispatch(RemoveLink(selfEntry.id));
         else return;
 
-      default: return;
+      default:
+        return;
     }
-  }
+  };
 
   const handleChapterIDChange = (e) => {
     const newID = e.target.value;
     if (!isNaN(newID))
-      dispatch(UpdateLink({ id: selfEntry.id, data: { linkType: { type: "new_chapter", data: newID } } }))
-    else
-      toast.error("The chapter ID must be a number")
-  }
+      dispatch(
+        UpdateLink({
+          id: selfEntry.id,
+          data: { linkType: { type: "new_chapter", data: newID } },
+        })
+      );
+    else toast.error("The chapter ID must be a number");
+  };
 
   return (
     <StoryFieldContainer ref={ref}>
@@ -78,5 +91,5 @@ export default function EditableLink({ isInitial, selfEntry }) {
         handleChapterInput={handleChapterIDChange}
       />
     </StoryFieldContainer>
-  )
-};
+  );
+}
